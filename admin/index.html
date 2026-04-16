@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - SBS News Hub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .admin-box { max-width: 900px; margin: 0 auto; }
+        .form-control { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="container main-content admin-box">
+        
+        <div id="loginView" class="card" style="max-width: 400px; margin: 0 auto;">
+            <h2>Acceso Seguro</h2>
+            <p class="meta">Credenciales por defecto: admin / sbs2026</p>
+            <input type="text" id="user" class="form-control" placeholder="Usuario">
+            <input type="password" id="pass" class="form-control" placeholder="Contraseña">
+            <button class="btn" style="width: 100%;" onclick="attemptLogin()">Ingresar</button>
+            <p id="errorMsg" style="color: red; margin-top: 10px; display: none;">Datos incorrectos.</p>
+        </div>
+
+        <div id="dashboardView" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Panel de Control</h1>
+                <button class="btn" style="background: #10b981;" onclick="triggerAutoGeneration()">
+                    ⚡ Generar con API/n8n
+                </button>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Gestión de Artículos</h2>
+                    <button class="btn" style="margin-top: 0;">+ Crear Manual</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Categoría</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>loadComponents('../');</script>
+</body>
+</html>
