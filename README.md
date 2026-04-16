@@ -46,3 +46,4 @@ Aquí hay un listado de las rutas importantes dentro de este proyecto:
 - **Directorio de Documentos:** `/var/www/jpphub/docs` - Documentación adicional sobre el proyecto y sus dependencias.
 
 Estas rutas son críticas para el funcionamiento y mantenimiento adecuado del sistema.
+# JppHub
