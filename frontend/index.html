@@ -9,15 +9,13 @@
 </head>
 
 <body>
-
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="logo">JppHub</div>
 
     <nav>
       <ul>
         <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#ia">IA Tools</a></li>
+        <li><a href="#ia">IA</a></li>
         <li><a href="#blog">Blog</a></li>
         <li><a href="#automatizacion">Automatización</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -25,94 +23,109 @@
     </nav>
 
     <div class="auth-buttons">
-      <button class="login">Login</button>
-      <button class="register">Registro</button>
+      <button class="login">Ingresar</button>
+      <button class="register">Regístrate</button>
     </div>
   </header>
 
+  <main>
+    <section id="inicio" class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">Plataforma de crecimiento profesional</span>
+        <h1>Domina IA y automatización con proyectos reales</h1>
+        <p class="hero-subtitle">Recursos, guías y flujos prácticos para optimizar tu trabajo y crear soluciones inteligentes desde cero.</p>
+        <a href="#ia" class="btn-primary">Descubre herramientas</a>
+      </div>
+    </section>
 
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <h1>Aprende IA y Automatización desde cero</h1>
-    <p>Guías prácticas, herramientas y proyectos reales para dominar la inteligencia artificial.</p>
-    <a href="#ia" class="btn-primary">Explorar herramientas</a>
-  </section>
-
-
-  <!-- IA TOOLS -->
-  <section id="ia" class="section">
-    <h2>Herramientas de IA</h2>
-
-    <div class="grid">
-      <div class="card">
-        <h3>ChatGPT</h3>
-        <p>Aprende a usar prompts avanzados y automatizar tareas.</p>
+    <section id="ia" class="section">
+      <div class="section-header">
+        <h2>Herramientas de IA</h2>
+        <p>Selecciona las herramientas clave para crear soluciones modernas con automatización, datos y productividad.</p>
       </div>
 
-      <div class="card">
-        <h3>n8n</h3>
-        <p>Automatiza procesos sin código conectando APIs.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>ChatGPT</h3>
+          <p>Diseña prompts efectivos y automatiza tareas con inteligencia conversacional.</p>
+        </div>
+
+        <div class="card">
+          <h3>n8n</h3>
+          <p>Construye flujos de trabajo sin código y conecta sistemas en minutos.</p>
+        </div>
+
+        <div class="card">
+          <h3>IA para negocios</h3>
+          <p>Implementa casos de uso reales para mejorar procesos internos y tomar mejores decisiones.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" class="section">
+      <div class="section-header">
+        <h2>Últimos artículos</h2>
+        <p>Contenido actualizado con estrategias, pasos prácticos y tendencias actuales en IA y automatización.</p>
       </div>
 
-      <div class="card">
-        <h3>IA para negocios</h3>
-        <p>Casos reales de automatización en empresas.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Qué es la IA en 2026</h3>
+          <p>Una guía clara con ejemplos prácticos para entender su impacto real.</p>
+        </article>
+
+        <article class="card">
+          <h3>Automatiza tu empresa</h3>
+          <p>Flujos de trabajo eficientes con n8n para ahorrar tiempo y reducir errores.</p>
+        </article>
+
+        <article class="card">
+          <h3>Gana dinero con IA</h3>
+          <p>Modelos viables de monetización para productos y servicios inteligentes.</p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <section id="automatizacion" class="section dark">
+      <div class="section-header">
+        <h2>Automatización inteligente</h2>
+        <p>Construye sistemas automáticos con APIs, bots y flujos que liberan tiempo y escalan operaciones.</p>
+      </div>
 
-  <!-- BLOG -->
-  <section id="blog" class="section">
-    <h2>Últimos artículos</h2>
+      <ul class="feature-list">
+        <li>Integraciones confiables entre herramientas y datos.</li>
+        <li>Flujos automatizados para tareas recurrentes.</li>
+        <li>Resultados medibles y escalables.</li>
+      </ul>
+    </section>
 
-    <div class="grid">
-      <article class="card">
-        <h3>Qué es la IA en 2026</h3>
-        <p>Introducción clara y ejemplos reales.</p>
-      </article>
+    <section id="contacto" class="section">
+      <div class="section-header">
+        <h2>Contacto</h2>
+        <p>¿Tienes una idea o quieres asesoría? Escríbenos y te contactamos.</p>
+      </div>
 
-      <article class="card">
-        <h3>Automatiza tu empresa</h3>
-        <p>Flujos de trabajo con n8n paso a paso.</p>
-      </article>
+      <form>
+        <label>
+          Nombre
+          <input type="text" placeholder="Tu nombre" required>
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" placeholder="Tu email" required>
+        </label>
+        <label>
+          Mensaje
+          <textarea placeholder="Mensaje" rows="5"></textarea>
+        </label>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+    </section>
+  </main>
 
-      <article class="card">
-        <h3>Gana dinero con IA</h3>
-        <p>Ideas reales de monetización.</p>
-      </article>
-    </div>
-  </section>
-
-
-  <!-- AUTOMATIZACIÓN -->
-  <section id="automatizacion" class="section dark">
-    <h2>Automatización</h2>
-    <p>
-      Aprende a crear sistemas automáticos con APIs, bots y flujos inteligentes.
-      Desde tareas simples hasta sistemas completos.
-    </p>
-  </section>
-
-
-  <!-- CONTACTO -->
-  <section id="contacto" class="section">
-    <h2>Contacto</h2>
-
-    <form>
-      <input type="text" placeholder="Tu nombre" required>
-      <input type="email" placeholder="Tu email" required>
-      <textarea placeholder="Mensaje"></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
-
-
-  <!-- FOOTER -->
   <footer>
-    <p>© 2026 JppHub - Todos los derechos reservados</p>
+    <p>© 2026 JppHub. Todos los derechos reservados.</p>
   </footer>
-
 </body>
 
 </html>
