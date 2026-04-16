@@ -47,3 +47,9 @@ Aquí hay un listado de las rutas importantes dentro de este proyecto:
 
 Estas rutas son críticas para el funcionamiento y mantenimiento adecuado del sistema.
 # JppHub
+
+
+git add .
+git commit -m "update"
+git pull origin main --rebase
+git push origin main
