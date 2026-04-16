@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy Docker App
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup SSH
@@ -23,11 +23,17 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      - name: Deploy to server
+      - name: Deploy with Docker Compose
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /var/www/jpphub || exit
+            set -e
+
+            cd /var/www/jpphub || exit 1
+
             git pull origin main
-            npm install --production
-            pm2 restart all || pm2 start index.js
+
+            docker compose down
+            docker compose up -d --build
+
+            echo "Deploy OK"
           EOF
