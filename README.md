@@ -1,55 +1,242 @@
-# Proyecto JPPHub\n\n## Frontend\nEl frontend es la parte del software con la que los usuarios interactúan directamente. Incluye el diseño visual, las interfaces de usuario y la experiencia del usuario que se presentan en el navegador web. Los elementos comunes del frontend son archivos HTML, CSS y JavaScript que controlan el diseño, el estilo y la interactividad, respectivamente.
-\n\n## Backend\nEl backend es la parte del software que maneja la lógica del servidor, la base de datos y la comunicación entre los usuarios y la infraestructura del servidor. Se encarga de las operaciones que ocurren entre bambalinas, incluyendo la autenticación, el almacenamiento y la gestión de datos. El backend está compuesto por scripts del servidor, API y gestión de bases de datos.
-\n\n## Estructura de Carpetas\n\nEl proyecto está organizado en la siguiente estructura de carpetas:\n\n- **admin/**: Archivos relacionados con la administración.\n  - index.html\n- **articles/**: Contiene artículos o contenido estático.\n  - articulo-1.html\n- **backend/**: Lógica del servidor y scripts de backend.\n  - controllers\n  - routes\n  - services\n- **frontend/**: Archivos que constituyen la interfaz de usuario.\n  - assets\n  - css\n    - style.css\n  - js\n    - admin.js\n    - main.js\n  - index.html
-\n\n## Iniciar Backend\nPara iniciar el backend del proyecto, asegúrate de tener todas las dependencias instaladas y ejecuta el siguiente comando desde el directorio \:\n\n```bash\nnpm start\n```\n\n## Puertos Usados\n- **Frontend**: Generalmente se ejecuta en el puerto 3000.\n- **Backend**: Normalmente opera en el puerto 5000, a menos que esté configurado de otra manera.\n\nAsegúrate de que estos puertos estén disponibles y no bloqueados por el firewall.
-\n\n## Iniciar Backend\nPara iniciar el backend del proyecto, asegúrate de tener todas las dependencias instaladas y ejecuta el siguiente comando desde el directorio 'backend':\n\n```bash\nnpm start\n```\n\n## Puertos Usados\n- **Frontend**: Generalmente se ejecuta en el puerto 3000.\n- **Backend**: Normalmente opera en el puerto 5000, a menos que esté configurado de otra manera.\n\nAsegúrate de que estos puertos estén disponibles y no bloqueados por el firewall.
+# JppHub 🚀
 
-## Nuevas Instrucciones
+**Plataforma de crecimiento profesional en IA y Automatización**
 
-Aquí van las instrucciones adicionales que deseas añadir.
+JppHub es una plataforma web moderna diseñada para enseñar y compartir conocimientos sobre Inteligencia Artificial, automatización y desarrollo profesional. El proyecto incluye recursos, guías, y flujos prácticos para optimizar tu trabajo y crear soluciones inteligentes.
 
-## Puerto Usado
+---
 
-El backend del proyecto utiliza el siguiente puerto:
+## 📋 Descripción General
 
-- **Puerto 3000:** Este es el puerto por defecto utilizado por el servidor de desarrollo. Puedes acceder al backend a través de `http://localhost:3000`.
+Este proyecto está estructurado con una arquitectura moderna que separa completamente el frontend del backend:
 
-Si necesitas cambiar el puerto, asegúrate de actualizar la configuración en los archivos correspondientes, como los archivos de entorno `.env`.
+- **Frontend**: Una interfaz de usuario moderna y responsiva construida con HTML, CSS y JavaScript
+- **Backend**: Lógica del servidor, APIs y gestión de base de datos (Node.js/Express)
+- **Infraestructura**: Containerización con Docker y Nginx como servidor web
 
-## Cómo Reiniciar Nginx
+---
 
-Para reiniciar el servidor web Nginx, sigue estos pasos:
+## 📁 Estructura del Proyecto
 
-1. **Accede a tu servidor** a través de la terminal o SSH, si es necesario.
+```
+JppHub/
+├── frontend/                    # Interfaz de usuario
+│   ├── index.html              # Página principal
+│   ├── css/
+│   │   └── style.css           # Estilos profesionales
+│   ├── js/
+│   │   ├── main.js             # JavaScript principal
+│   │   └── admin.js            # Funcionalidades de administración
+│   └── articles/               # Contenido de artículos
+│       └── articulo-1.html
+├── backend/                    # Lógica del servidor
+│   ├── controllers/            # Controladores de rutas
+│   ├── routes/                 # Definición de rutas API
+│   └── services/               # Servicios y lógica de negocio
+├── admin/                      # Panel de administración
+│   └── index.html
+├── nginx/                      # Configuración de servidor web
+│   ├── default.conf
+│   └── site.conf
+├── docker/                     # Archivos de containerización
+│   ├── Dockerfile.frontend
+│   ├── Dockerfile.backend
+│   └── Dockerfile.ignore
+├── docker-compose.yml          # Configuración de contenedores
+├── package.json                # Dependencias del proyecto
+└── README.md                   # Este archivo
+```
 
-2. **Ejecuta el siguiente comando** para reiniciar Nginx:
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Backend**: Node.js, Express.js
+- **Servidor Web**: Nginx
+- **Containerización**: Docker & Docker Compose
+- **Control de Versiones**: Git
+
+---
+
+## 📦 Instalación y Configuración
+
+### Requisitos Previos
+- Docker y Docker Compose instalados
+- Node.js v14+ (para desarrollo local)
+- Git
+
+### Pasos de Instalación
+
+1. **Clonar el repositorio**
    ```bash
-   sudo systemctl restart nginx
+   git clone <URL-del-repositorio>
+   cd JppHub-main
    ```
 
-3. **Verifica que Nginx está funcionando correctamente** después del reinicio:
+2. **Instalar dependencias (opcional, si ejecutas localmente)**
    ```bash
-   sudo systemctl status nginx
+   npm install
    ```
 
-   El estado debe indicar que el servicio Nginx está activo y funcionando.
+3. **Ejecutar con Docker Compose**
+   ```bash
+   docker-compose up --build
+   ```
 
-Si encuentras problemas al reiniciar, revisa los logs de Nginx ubicados típicamente en `/var/log/nginx/error.log`.
+4. **Acceder a la aplicación**
+   - Frontend: `http://localhost:3000`
+   - Backend: `http://localhost:4000`
+   - Nginx: `http://localhost:8080`
 
-## Rutas Importantes del Proyecto
+---
 
-Aquí hay un listado de las rutas importantes dentro de este proyecto:
+## 🚀 Puertos Utilizados
 
-- **Directorio de Configuración:** `/var/www/jpphub/config` - Contiene los archivos de configuración esenciales para el backend.
-- **Directorio de Logs:** `/var/log/nginx` - Localización de los logs de Nginx para verificar errores y accesos.
-- **Directorio de Scripts:** `/var/www/jpphub/scripts` - Scripts útiles para la administración y el mantenimiento del servidor.
-- **Directorio de Documentos:** `/var/www/jpphub/docs` - Documentación adicional sobre el proyecto y sus dependencias.
+| Servicio | Puerto | Descripción |
+|----------|--------|-------------|
+| Frontend | 3000 | Servidor de desarrollo del frontend |
+| Backend | 4000 | API del servidor |
+| Nginx | 8080 | Servidor web principal |
 
-Estas rutas son críticas para el funcionamiento y mantenimiento adecuado del sistema.
-# JppHub
+---
 
+## 💻 Desarrollo Local
 
+### Ejecutar Frontend Localmente
+```bash
+cd frontend
+python3 -m http.server 8000
+```
+Accede a `http://localhost:8000`
+
+### Ejecutar Backend Localmente
+```bash
+cd backend
+npm install
+npm start
+```
+
+---
+
+## 📤 Subir Cambios a GitHub
+
+**Comandos para recordar cómo subir el código:**
+
+```bash
 git add .
 git commit -m "update"
 git pull origin main --rebase
 git push origin main
+```
+
+### Explicación detallada:
+
+1. **`git add .`** - Agrega todos los cambios al área de preparación
+2. **`git commit -m "update"`** - Crea un commit local con los cambios
+3. **`git pull origin main --rebase`** - Obtiene los últimos cambios del repositorio remoto
+4. **`git push origin main`** - Sube tus cambios a GitHub
+
+### Flujo completo recomendado:
+
+```bash
+# 1. Ver el estado actual
+git status
+
+# 2. Preparar cambios
+git add .
+
+# 3. Crear el commit
+git commit -m "update"
+
+# 4. Sincronizar con el remoto
+git pull origin main --rebase
+
+# 5. Subir los cambios
+git push origin main
+
+# 6. Confirmar que se subió correctamente
+git log --oneline -5
+```
+
+---
+
+## 🔧 Reiniciar Servicios
+
+### Reiniciar Docker Compose
+```bash
+docker-compose restart
+```
+
+### Reiniciar Nginx (si ejecutas en el servidor)
+```bash
+sudo systemctl restart nginx
+sudo systemctl status nginx
+```
+
+---
+
+## 📝 Comandos Útiles
+
+| Comando | Descripción |
+|---------|-------------|
+| `docker-compose up --build` | Construir e iniciar todos los servicios |
+| `docker-compose down` | Detener todos los servicios |
+| `docker-compose logs` | Ver logs de los servicios |
+| `git status` | Ver estado actual del repositorio |
+| `git log` | Ver historial de cambios |
+| `git diff` | Ver cambios sin commitar |
+| `git reset HEAD~1` | Deshacer el último commit (pero mantiene cambios) |
+
+---
+
+## 📂 Rutas Importantes en Producción
+
+- **Configuración**: `/var/www/jpphub/config`
+- **Logs de Nginx**: `/var/log/nginx`
+- **Scripts**: `/var/www/jpphub/scripts`
+- **Documentación**: `/var/www/jpphub/docs`
+
+---
+
+## ✨ Características Principales
+
+✅ Diseño profesional y responsivo
+✅ Plataforma educativa sobre IA y automatización
+✅ Contenido sobre herramientas como ChatGPT, n8n
+✅ Formulario de contacto funcional
+✅ Blog con últimos artículos
+✅ Sección de automatización inteligente
+✅ Infraestructura containerizada
+
+---
+
+## 🤝 Contribución
+
+Si deseas contribuir al proyecto:
+
+1. Haz un fork del repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Abre un Pull Request
+
+---
+
+## 📧 Contacto y Soporte
+
+Para consultas, sugerencias o reportar problemas, puedes:
+- Usar el formulario de contacto en la web
+- Abrir un issue en GitHub
+- Revisar la documentación en `/docs`
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo licencia MIT. Consulta el archivo LICENSE para más detalles.
+
+---
+
+**Última actualización**: 20 de abril de 2026
+**Versión**: 1.0.0
