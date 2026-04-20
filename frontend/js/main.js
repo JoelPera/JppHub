@@ -100,9 +100,10 @@ function updateNavbar() {
     if (auth.isAuthenticated) {
         const user = auth.getUser();
         if (user) {
+            const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
             authButtons.innerHTML = `
                 <span style="color: var(--text); margin-right: 1rem;">
-                    Hola, ${user.first_name}
+                    Hola, ${displayName || 'Usuario'}
                 </span>
                 <a href="pages/dashboard.html" class="btn-secondary" style="margin-right: 0.5rem;">Dashboard</a>
                 <button class="btn-danger" onclick="auth.logout()" style="margin-right: 0.5rem;">Salir</button>

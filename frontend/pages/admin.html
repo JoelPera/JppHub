@@ -384,15 +384,12 @@
                 const registerDate = new Date(user.created_at).toLocaleDateString('es-ES');
                 const roleClass = user.role === 'admin' ? 'role-admin' : 'role-user';
                 const subscriptionClass = user.subscription_status === 'premium' ? 'status-active' : 'status-inactive';
+                    const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
 
-                html += `
-                    <tr>
-                        <td>${user.id}</td>
-                        <td>${user.first_name} ${user.last_name}</td>
-                        <td>${user.email}</td>
-                        <td><span class="role-badge ${roleClass}">${user.role}</span></td>
-                        <td><span class="status-badge ${subscriptionClass}">${user.subscription_status || 'free'}</span></td>
-                        <td>${registerDate}</td>
+                    html += `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${displayName}</td>
                     </tr>
                 `;
             });

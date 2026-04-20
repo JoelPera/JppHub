@@ -284,6 +284,8 @@
                 const userInfo = document.getElementById('user-info');
 
                 if (user) {
+                    const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
+                    const initials = displayName.split(' ').map(part => part.charAt(0)).slice(0, 2).join('').toUpperCase() || 'US';
                     const subscriptionClass = user.role === 'admin' ? 'subscription-admin' :
                                            user.subscription_status === 'premium' ? 'subscription-premium' :
                                            'subscription-free';
@@ -293,9 +295,9 @@
                                            'Free';
 
                     userInfo.innerHTML = `
-                        <div class="user-avatar">${user.first_name.charAt(0)}${user.last_name.charAt(0)}</div>
+                        <div class="user-avatar">${initials}</div>
                         <div class="user-details">
-                            <h3>${user.first_name} ${user.last_name}</h3>
+                            <h3>${displayName}</h3>
                             <p>${user.email}</p>
                             <span class="subscription-badge ${subscriptionClass}">${subscriptionText}</span>
                         </div>
