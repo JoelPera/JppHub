@@ -187,7 +187,11 @@
                     const response = await auth.login(email, password);
 
                     // Success - redirect to dashboard
-                    window.location.href = 'dashboard.html';
+                    if (response && response.token) {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        throw new Error('Error en la respuesta de autenticación');
+                    }
 
                 } catch (error) {
                     // Show error

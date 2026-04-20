@@ -236,8 +236,7 @@
 
                 try {
                     const userData = {
-                        first_name: firstName,
-                        last_name: lastName,
+                        name: `${firstName} ${lastName}`.trim(),
                         email: email,
                         password: password
                     };

@@ -1,6 +1,21 @@
 // frontend/utils/api.js
 
-const API_BASE_URL = 'http://localhost:4000/api';
+const API_BASE_URL = (() => {
+    if (typeof window === 'undefined') {
+        return 'http://localhost:4000/api';
+    }
+
+    if (window.API_BASE_URL) {
+        return window.API_BASE_URL;
+    }
+
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+        return 'http://localhost:4000/api';
+    }
+
+    return `${window.location.origin}/api`;
+})();
 
 // API utility functions for JppHub frontend
 class ApiClient {
@@ -75,7 +90,8 @@ class ApiClient {
             throw new Error(error.message);
         }
 
-        const data = await response.json();
+        const payload = await response.json();
+        const data = payload.data || payload;
         if (data.token) {
             this.setToken(data.token);
         }
@@ -94,7 +110,8 @@ class ApiClient {
             throw new Error(error.message);
         }
 
-        const data = await response.json();
+        const payload = await response.json();
+        const data = payload.data || payload;
         if (data.token) {
             this.setToken(data.token);
         }

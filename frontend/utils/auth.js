@@ -19,7 +19,7 @@ class AuthManager {
     async login(email, password) {
         try {
             const response = await api.login(email, password);
-            this.setUser(response.user);
+            this.setUser(response.user || response);
             this.isAuthenticated = true;
             return response;
         } catch (error) {
@@ -30,7 +30,7 @@ class AuthManager {
     async register(userData) {
         try {
             const response = await api.register(userData);
-            this.setUser(response.user);
+            this.setUser(response.user || response);
             this.isAuthenticated = true;
             return response;
         } catch (error) {
@@ -40,9 +40,10 @@ class AuthManager {
 
     logout() {
         localStorage.removeItem('jpphub_token');
+        localStorage.removeItem('jpphub_user');
         this.user = null;
         this.isAuthenticated = false;
-        window.location.href = '/frontend/index.html';
+        window.location.href = '/index.html';
     }
 
     setUser(user) {
@@ -90,7 +91,7 @@ class AuthManager {
     // Redirect if not authenticated
     checkAuth() {
         if (this.requiresAuth() && !this.isAuthenticated) {
-            window.location.href = '/frontend/pages/login.html';
+            window.location.href = '/pages/login.html';
             return false;
         }
         return true;
