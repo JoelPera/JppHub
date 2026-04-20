@@ -117,6 +117,24 @@ npm install
 npm start
 ```
 
+## Cambios Recientes
+
+### Conexión a Base de Datos MySQL
+- Se agregó configuración de conexión a MySQL en `backend/.env` con las credenciales proporcionadas.
+- Se creó `backend/server.js` con Express y mysql2 para manejar la API.
+- Se agregó `backend/package.json` con dependencias necesarias: express, mysql2, cors, dotenv.
+
+### API del Backend
+- Endpoint GET /api/articles para obtener artículos desde la base de datos.
+
+### Conexión Frontend-Backend
+- Se modificó `frontend/js/main.js` para cargar artículos desde la API en lugar de datos simulados.
+- El frontend hace fetch a `http://localhost:5000/api/articles`.
+
+### Instrucciones de Inicio
+- Para iniciar el backend: `cd backend && npm install && npm start`.
+- Asegurarse de que MySQL esté corriendo con la tabla 'articles' creada.
+
 ---
 
 ## 📤 Subir Cambios a GitHub

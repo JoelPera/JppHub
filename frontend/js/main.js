@@ -1,36 +1,56 @@
 // js/main.js
 
-// 1. BASE DE DATOS SIMULADA (Índice de artículos)
-// En el futuro, tu bot de n8n actualizará este array o generará un data.json
-const articlesDB = [
-    {
-        id: "art-1",
-        title: "El impacto de la IA cuántica en 2026",
-        excerpt: "Investigadores logran estabilizar qubits a temperatura ambiente, abriendo la puerta a una nueva era de computación...",
-        author: "Tech Bot",
-        date: "2026-03-26",
-        category: "Tecnología",
-        url: "articles/articulo-1.html"
-    },
-    {
-        id: "art-2",
-        title: "Mercados globales responden a la nueva moneda digital",
-        excerpt: "Los principales bancos centrales acuerdan un marco regulatorio unificado para las CBDCs globales...",
-        author: "Finance Bot",
-        date: "2026-03-25",
-        category: "Economía",
-        url: "articles/articulo-2.html"
-    },
-    {
-        id: "art-3",
-        title: "Descubren exoplaneta con océanos líquidos",
-        excerpt: "El telescopio James Webb confirma la existencia de agua en estado líquido en Kepler-452c...",
-        author: "Science Bot",
-        date: "2026-03-24",
-        category: "Ciencia",
-        url: "articles/articulo-3.html"
+// 1. CARGA DE ARTÍCULOS DESDE EL BACKEND
+let articlesDB = [];
+
+async function loadArticles() {
+    try {
+        const response = await fetch('http://localhost:5000/api/articles');
+        if (!response.ok) {
+            throw new Error('Error al cargar artículos');
+        }
+        articlesDB = await response.json();
+        // Si estamos en la página principal, renderizar artículos
+        if (document.getElementById('article-grid')) {
+            renderArticles();
+        }
+    } catch (error) {
+        console.error('Error loading articles:', error);
+        // Fallback a datos simulados si falla la API
+        articlesDB = [
+            {
+                id: "art-1",
+                title: "El impacto de la IA cuántica en 2026",
+                excerpt: "Investigadores logran estabilizar qubits a temperatura ambiente, abriendo la puerta a una nueva era de computación...",
+                author: "Tech Bot",
+                date: "2026-03-26",
+                category: "Tecnología",
+                url: "articles/articulo-1.html"
+            },
+            {
+                id: "art-2",
+                title: "Mercados globales responden a la nueva moneda digital",
+                excerpt: "Los principales bancos centrales acuerdan un marco regulatorio unificado para las CBDCs globales...",
+                author: "Finance Bot",
+                date: "2026-03-25",
+                category: "Economía",
+                url: "articles/articulo-2.html"
+            },
+            {
+                id: "art-3",
+                title: "Descubren exoplaneta con océanos líquidos",
+                excerpt: "El telescopio James Webb confirma la existencia de agua en estado líquido en Kepler-452c...",
+                author: "Science Bot",
+                date: "2026-03-24",
+                category: "Ciencia",
+                url: "articles/articulo-3.html"
+            }
+        ];
+        if (document.getElementById('article-grid')) {
+            renderArticles();
+        }
     }
-];
+}
 
 // 2. INYECCIÓN DE HEADER Y FOOTER
 function loadComponents(basePath = '') {
@@ -128,6 +148,9 @@ function handleSearch(basePath) {
 
 // Auto-ejecutar render si hay parámetros en la URL (ej. al volver de buscar en otra página)
 window.addEventListener('DOMContentLoaded', () => {
+    loadComponents(); // Asegurar que los componentes se carguen primero
+    loadArticles(); // Cargar artículos desde el backend
+
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     if (searchParam && document.getElementById('article-grid')) {
