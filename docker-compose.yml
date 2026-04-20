@@ -16,11 +16,12 @@ services:
       - "4000:4000"
 
   nginx:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
-      - frontend
       - backend
