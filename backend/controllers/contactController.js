@@ -2,33 +2,10 @@ import { ContactService } from '../services/contactService.js';
 
 // ========== CONTROLADOR DE CONTACTO ==========
 export class ContactController {
-    // Enviar mensaje de contacto
     static async sendMessage(req, res, next) {
         try {
             const { name, email, message } = req.body;
-
-            // Validaciones
-            if (!name || !email || !message) {
-                return res.status(400).json({
-                    status: 'error',
-                    message: 'Campos requeridos: name, email, message'
-                });
-            }
-
-            // Validar email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                return res.status(400).json({
-                    status: 'error',
-                    message: 'Email inválido'
-                });
-            }
-
-            const contactMessage = await ContactService.saveMessage({
-                name,
-                email,
-                message
-            });
+            const contactMessage = await ContactService.saveMessage({ name, email, message });
 
             res.status(201).json({
                 status: 'success',
@@ -40,10 +17,9 @@ export class ContactController {
         }
     }
 
-    // Obtener todos los mensajes
     static async getAllMessages(req, res, next) {
         try {
-            const messages = ContactService.getAllMessages();
+            const messages = await ContactService.getAllMessages();
             res.json({
                 status: 'success',
                 data: messages,
@@ -54,11 +30,10 @@ export class ContactController {
         }
     }
 
-    // Obtener mensaje por ID
     static async getMessageById(req, res, next) {
         try {
             const { id } = req.params;
-            const message = ContactService.getMessageById(id);
+            const message = await ContactService.getMessageById(id);
 
             if (!message) {
                 return res.status(404).json({

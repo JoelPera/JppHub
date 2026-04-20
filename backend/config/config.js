@@ -11,13 +11,12 @@ export const config = {
     // Frontend
     FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
 
-    // Base de datos (preparado para futuro)
-    DATABASE_URL: process.env.DATABASE_URL || '',
-    DATABASE_NAME: process.env.DATABASE_NAME || 'jpphub',
-    DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
-    DATABASE_PORT: process.env.DATABASE_PORT || 5432,
-    DATABASE_USER: process.env.DATABASE_USER || '',
-    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || '',
+    // Base de datos
+    DB_HOST: process.env.DB_HOST || 'localhost',
+    DB_PORT: process.env.DB_PORT || 3306,
+    DB_USER: process.env.DB_USER || '',
+    DB_PASSWORD: process.env.DB_PASSWORD || '',
+    DB_NAME: process.env.DB_NAME || 'jpphub',
 
     // Email (preparado para futuro)
     SMTP_HOST: process.env.SMTP_HOST || '',

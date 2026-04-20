@@ -1,38 +1,30 @@
-// ========== MANEJO GLOBAL DE ERRORES ==========
-export const errorHandler = (err, req, res, next) => {
-    const timestamp = new Date().toISOString();
-    const status = err.status || 500;
-    const message = err.message || 'Error interno del servidor';
+import Joi from 'joi';
 
-    console.error(`[${timestamp}] ERROR ${status}: ${message}`);
-
-    res.status(status).json({
-        status: 'error',
-        code: status,
-        message: message,
-        timestamp: timestamp,
-        ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-    });
-};
-
-// ========== VALIDACIÓN DE SOLICITUDES ==========
 export const validateRequest = (schema) => {
     return (req, res, next) => {
-        try {
-            // Validación simple - puedes reemplazar con Joi o similar
-            if (schema && typeof schema === 'function') {
-                const { error, value } = schema(req.body);
-                if (error) {
-                    return res.status(400).json({
-                        status: 'error',
-                        message: error.message
-                    });
-                }
-                req.body = value;
+        const { error, value } = schema.validate(
+            {
+                body: req.body,
+                params: req.params,
+                query: req.query
+            },
+            {
+                abortEarly: false,
+                stripUnknown: true
             }
-            next();
-        } catch (err) {
-            next(err);
+        );
+
+        if (error) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Datos de entrada inválidos',
+                details: error.details.map(detail => detail.message)
+            });
         }
+
+        req.body = value.body;
+        req.params = value.params;
+        req.query = value.query;
+        next();
     };
 };

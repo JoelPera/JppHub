@@ -1,23 +1,18 @@
 import express from 'express';
 import ArticleController from '../controllers/articleController.js';
+import { validateRequest } from '../middleware/validationMiddleware.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { permit } from '../middleware/roleMiddleware.js';
+import { createArticleSchema, updateArticleSchema } from '../validators/articleValidators.js';
 
 const router = express.Router();
 
 // ========== RUTAS DE ARTÍCULOS ==========
 
-// GET /api/articles - Obtener todos los artículos
 router.get('/', ArticleController.getAllArticles);
-
-// GET /api/articles/:id - Obtener artículo específico
 router.get('/:id', ArticleController.getArticleById);
-
-// POST /api/articles - Crear nuevo artículo
-router.post('/', ArticleController.createArticle);
-
-// PUT /api/articles/:id - Actualizar artículo
-router.put('/:id', ArticleController.updateArticle);
-
-// DELETE /api/articles/:id - Eliminar artículo
-router.delete('/:id', ArticleController.deleteArticle);
+router.post('/', authenticate, permit('admin'), validateRequest(createArticleSchema), ArticleController.createArticle);
+router.put('/:id', authenticate, permit('admin'), validateRequest(updateArticleSchema), ArticleController.updateArticle);
+router.delete('/:id', authenticate, permit('admin'), ArticleController.deleteArticle);
 
 export default router;

@@ -5,7 +5,7 @@ export class ArticleController {
     // Obtener todos los artículos
     static async getAllArticles(req, res, next) {
         try {
-            const articles = ArticleService.getAllArticles();
+            const articles = await ArticleService.getAllArticles();
             res.json({
                 status: 'success',
                 data: articles,
@@ -20,7 +20,7 @@ export class ArticleController {
     static async getArticleById(req, res, next) {
         try {
             const { id } = req.params;
-            const article = ArticleService.getArticleById(id);
+            const article = await ArticleService.getArticleById(id);
 
             if (!article) {
                 return res.status(404).json({
@@ -42,20 +42,12 @@ export class ArticleController {
     static async createArticle(req, res, next) {
         try {
             const { title, description, content, category, author } = req.body;
-
-            if (!title || !description || !content) {
-                return res.status(400).json({
-                    status: 'error',
-                    message: 'Campos requeridos: title, description, content'
-                });
-            }
-
-            const newArticle = ArticleService.createArticle({
+            const newArticle = await ArticleService.createArticle({
                 title,
                 description,
                 content,
-                category: category || 'General',
-                author: author || 'Admin'
+                category,
+                author
             });
 
             res.status(201).json({
@@ -74,7 +66,7 @@ export class ArticleController {
             const { id } = req.params;
             const updates = req.body;
 
-            const updatedArticle = ArticleService.updateArticle(id, updates);
+            const updatedArticle = await ArticleService.updateArticle(id, updates);
 
             if (!updatedArticle) {
                 return res.status(404).json({
@@ -97,7 +89,7 @@ export class ArticleController {
     static async deleteArticle(req, res, next) {
         try {
             const { id } = req.params;
-            const deleted = ArticleService.deleteArticle(id);
+            const deleted = await ArticleService.deleteArticle(id);
 
             if (!deleted) {
                 return res.status(404).json({
