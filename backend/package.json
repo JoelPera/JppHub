@@ -1,0 +1,27 @@
+{
+    "name": "jpphub-backend",
+    "version": "1.0.0",
+    "description": "Backend API para JppHub - Plataforma de IA y Automatización",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "api",
+        "jpphub",
+        "ia",
+        "automatizacion"
+    ],
+    "author": "JppHub Team",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {}
+}
