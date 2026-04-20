@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.get('/', ArticleController.getAllArticles);
 router.get('/:id', ArticleController.getArticleById);
+router.patch('/:id/views', ArticleController.incrementArticleViews);
 router.post('/', authenticate, permit('admin'), validateRequest(createArticleSchema), ArticleController.createArticle);
 router.put('/:id', authenticate, permit('admin'), validateRequest(updateArticleSchema), ArticleController.updateArticle);
 router.delete('/:id', authenticate, permit('admin'), ArticleController.deleteArticle);

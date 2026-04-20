@@ -7,6 +7,11 @@ import { config } from './config/config.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import articleRoutes from './routes/articleRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import subscriptionRoutes from './routes/subscriptionRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -37,6 +42,11 @@ app.use(rateLimit({
 app.use('/api/auth', authRoutes);
 app.use('/api/health', healthRoutes);
 app.use('/api/articles', articleRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 
 // Ruta raíz

@@ -117,24 +117,177 @@ npm install
 npm start
 ```
 
+### Variables de Entorno Backend
+Crear archivo `backend/.env`:
+```bash
+PORT=4000
+HOST=localhost
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=password
+DB_NAME=jpphub
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRE=7d
+```
+
+---
 ## Cambios Recientes
 
-### Conexión a Base de Datos MySQL
-- Se agregó configuración de conexión a MySQL en `backend/.env` con las credenciales proporcionadas.
-- Se creó `backend/server.js` con Express y mysql2 para manejar la API.
-- Se agregó `backend/package.json` con dependencias necesarias: express, mysql2, cors, dotenv.
+### Actualización Completa del Backend SaaS (v1.1)
 
-### API del Backend
-- Endpoint GET /api/articles para obtener artículos desde la base de datos.
+La arquitectura backend ha sido completamente refactorizado a nivel de producción con soporte completo para aplicaciones SaaS:
 
-### Conexión Frontend-Backend
-- Se modificó `frontend/js/main.js` para cargar artículos desde la API en lugar de datos simulados.
-- El frontend hace fetch a `http://localhost:5000/api/articles`.
+#### ✨ Nuevas Características:
 
-### Instrucciones de Inicio
-- Para iniciar el backend: `cd backend && npm install && npm start`.
-- Asegurarse de que MySQL esté corriendo con la tabla 'articles' creada.
+1. **Sistema de Autenticación Robusto**
+   - JWT tokens con validación en cada request
+   - Hash de contraseñas con bcrypt
+   - Roles y permisos (admin, user, premium)
+   - Refresh tokens y logout seguro
 
+2. **Arquitectura en Capas**
+   - **Routes**: Definición de endpoints HTTP
+   - **Controllers**: Manejadores de solicitudes
+   - **Services**: Lógica de negocio
+   - **Repositories**: Acceso a datos MySQL
+   - **Validators**: Esquemas Joi para validación
+   - **Middleware**: Autenticación, roles, validación, manejo de errores
+
+3. **Gestión de Usuarios**
+   - Registro y login seguro
+   - Perfiles de usuario
+   - Historial de actividad
+   - Administración de sesiones
+
+4. **Sistema de Contenido**
+   - Artículos/Posts con estados (draft, published)
+   - Categorías configurables
+   - Contador de vistas
+   - Gestión de autor y metadata
+
+5. **Sistema de Suscripciones y Pagos**
+   - Planes: basic, pro, enterprise
+   - Integración con proveedores de pago (stripe, paypal)
+   - Historial completo de pagos
+   - Gestión de suscripciones
+
+6. **Panel de Administración**
+   - API endpoints para gestionar usuarios
+   - Visualización de suscripciones y pagos
+   - Logs de actividad del sistema
+   - Estadísticas y reportes
+
+7. **Seguridad de Producción**
+   - Helmet para headers HTTP seguros
+   - Rate limiting (120 req/15min por IP)
+   - CORS configurable
+   - Sanitización contra XSS
+   - Validación de entrada robusta
+   - Parametrización de queries SQL
+
+#### 📡 Nuevos Endpoints API:
+
+```
+POST   /api/auth/register          # Registrar usuario
+POST   /api/auth/login             # Iniciar sesión
+POST   /api/auth/refresh           # Refrescar token
+POST   /api/auth/logout            # Cerrar sesión
+
+GET    /api/articles               # Listar artículos
+POST   /api/articles               # Crear artículo (admin)
+GET    /api/articles/:id           # Obtener artículo
+PATCH  /api/articles/:id/views     # Incrementar vistas
+PUT    /api/articles/:id           # Actualizar artículo (admin)
+DELETE /api/articles/:id           # Eliminar artículo (admin)
+
+GET    /api/categories             # Listar categorías
+POST   /api/categories             # Crear categoría (admin)
+PUT    /api/categories/:id         # Actualizar categoría (admin)
+DELETE /api/categories/:id         # Eliminar categoría (admin)
+
+GET    /api/subscriptions          # Obtener suscripción (auth)
+POST   /api/subscriptions          # Crear suscripción (auth)
+PATCH  /api/subscriptions/cancel   # Cancelar suscripción (auth)
+
+GET    /api/payments               # Listar pagos (auth)
+POST   /api/payments               # Crear pago (auth)
+
+GET    /api/users/me               # Perfil del usuario (auth)
+GET    /api/users                  # Listar usuarios (admin)
+
+GET    /api/admin/users            # Admin: usuarios
+GET    /api/admin/subscriptions    # Admin: suscripciones
+GET    /api/admin/payments         # Admin: pagos
+GET    /api/admin/activity         # Admin: actividad
+
+GET    /api/health                 # Health check
+```
+
+#### 📊 Estructura de Base de Datos:
+
+Se requieren las siguientes tablas MySQL:
+- `users` - Usuarios del sistema
+- `posts` - Artículos y contenido
+- `categories` - Categorías de posts
+- `subscriptions` - Datos de suscripción por usuario
+- `payments` - Historial de transacciones
+- `sessions` - Sesiones activas
+- `contact_messages` - Mensajes de contacto
+- `activity_logs` - Registro de actividad del sistema
+
+#### 🔧 Configuración del Backend:
+
+**Archivo `.env.example` (copiar a `.env`):**
+```bash
+# Server
+PORT=4000
+HOST=localhost
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
+
+# Database
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=tu_contraseña
+DB_NAME=jpphub
+
+# JWT
+JWT_SECRET=tu_clave_secreta_super_larga
+JWT_EXPIRE=7d
+```
+
+#### 📖 Documentación Completa:
+
+Para documentación detallada del backend con ejemplos de uso, flow de autenticación, matrix de permisos, y más:
+
+→ **Ver [BACKEND.md](./BACKEND.md)**
+
+#### 🚀 Iniciar Backend:
+
+```bash
+cd backend
+npm install
+npm start              # Producción
+npm run dev            # Desarrollo con nodemon
+```
+
+Verificar: `curl http://localhost:4000/api/health`
+
+#### ✅ Cambios de versión anterior:
+
+- ✅ Conexión MySQL completamente integrada
+- ✅ API REST con estructura profesional
+- ✅ Autenticación JWT con roles
+- ✅ Validación robusta Joi
+- ✅ Middleware de seguridad
+- ✅ Manejo de errores centralizado
+- ✅ Logging de actividad
+- ✅ Rate limiting y protección contra abuso
+- ✅ Documentación API completa
 ---
 
 ## 📤 Subir Cambios a GitHub

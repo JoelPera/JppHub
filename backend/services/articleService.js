@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
-import { articleRepository } from '../repositories/articleRepository.js';
+import { postRepository } from '../repositories/postRepository.js';
 
 export class ArticleService {
     static async getAllArticles() {
-        return articleRepository.findAll();
+        return postRepository.findAll();
     }
 
     static async getArticleById(id) {
-        return articleRepository.findById(id);
+        return postRepository.findById(id);
     }
 
     static async createArticle(articleData) {
@@ -17,21 +17,22 @@ export class ArticleService {
             description: articleData.description,
             content: articleData.content,
             category: articleData.category || 'General',
-            author: articleData.author || 'Admin'
+            author: articleData.author || 'Admin',
+            status: articleData.status || 'draft'
         };
-        return articleRepository.create(payload);
+        return postRepository.create(payload);
     }
 
     static async updateArticle(id, updates) {
-        return articleRepository.update(id, updates);
+        return postRepository.update(id, updates);
     }
 
     static async deleteArticle(id) {
-        return articleRepository.delete(id);
+        return postRepository.delete(id);
     }
 
-    static async searchArticles(query) {
-        return articleRepository.search(query);
+    static async incrementArticleViews(id) {
+        return postRepository.incrementViews(id);
     }
 }
 

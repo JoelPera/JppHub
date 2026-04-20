@@ -106,6 +106,28 @@ export class ArticleController {
             next(error);
         }
     }
+
+    static async incrementArticleViews(req, res, next) {
+        try {
+            const { id } = req.params;
+            const article = await ArticleService.incrementArticleViews(id);
+
+            if (!article) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'Artículo no encontrado'
+                });
+            }
+
+            res.json({
+                status: 'success',
+                message: 'Contador de visitas actualizado',
+                data: article
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export default ArticleController;
