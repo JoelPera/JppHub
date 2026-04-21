@@ -175,30 +175,28 @@
 
             loginForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                errorMessage.style.display = 'none';
+                errorMessage.textContent = '';
 
-                const email = document.getElementById('email').value;
+                const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value;
 
-                // Show loading state
                 loginBtn.disabled = true;
                 loginBtn.innerHTML = '<span class="loading"></span>Iniciando sesión...';
 
                 try {
                     const response = await auth.login(email, password);
 
-                    // Success - redirect to dashboard
                     if (response && response.token) {
                         window.location.href = 'dashboard.html';
-                    } else {
-                        throw new Error('Error en la respuesta de autenticación');
+                        return;
                     }
 
+                    throw new Error('Error en la respuesta de autenticación');
                 } catch (error) {
-                    // Show error
-                    errorMessage.textContent = error.message;
+                    errorMessage.textContent = error.message || 'No se pudo iniciar sesión';
                     errorMessage.style.display = 'block';
 
-                    // Reset button
                     loginBtn.disabled = false;
                     loginBtn.textContent = 'Iniciar Sesión';
                 }

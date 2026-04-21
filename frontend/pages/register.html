@@ -212,51 +212,47 @@
 
             registerForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                errorMessage.style.display = 'none';
+                errorMessage.textContent = '';
+                successMessage.style.display = 'none';
 
-                const firstName = document.getElementById('first_name').value;
-                const lastName = document.getElementById('last_name').value;
-                const email = document.getElementById('email').value;
+                const firstName = document.getElementById('first_name').value.trim();
+                const lastName = document.getElementById('last_name').value.trim();
+                const email = document.getElementById('email').value.trim();
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirm_password').value;
 
-                // Validate passwords match
                 if (password !== confirmPassword) {
                     errorMessage.textContent = 'Las contraseñas no coinciden';
                     errorMessage.style.display = 'block';
                     return;
                 }
 
-                // Hide previous messages
-                errorMessage.style.display = 'none';
-                successMessage.style.display = 'none';
-
-                // Show loading state
                 registerBtn.disabled = true;
                 registerBtn.innerHTML = '<span class="loading"></span>Creando cuenta...';
 
                 try {
                     const userData = {
                         name: `${firstName} ${lastName}`.trim(),
-                        email: email,
-                        password: password
+                        email,
+                        password
                     };
 
                     const response = await auth.register(userData);
 
-                    // Success
-                    successMessage.style.display = 'block';
+                    if (response && response.token) {
+                        successMessage.style.display = 'block';
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1200);
+                        return;
+                    }
 
-                    // Redirect after short delay
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 2000);
-
+                    throw new Error('Error en la creación de la cuenta');
                 } catch (error) {
-                    // Show error
-                    errorMessage.textContent = error.message;
+                    errorMessage.textContent = error.message || 'No se pudo crear la cuenta';
                     errorMessage.style.display = 'block';
 
-                    // Reset button
                     registerBtn.disabled = false;
                     registerBtn.textContent = 'Crear Cuenta';
                 }

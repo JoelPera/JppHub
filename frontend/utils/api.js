@@ -23,26 +23,23 @@ class ApiClient {
         this.baseURL = API_BASE_URL;
     }
 
-    // Get stored JWT token
     getToken() {
         return localStorage.getItem('jpphub_token');
     }
 
-    // Set JWT token
     setToken(token) {
         localStorage.setItem('jpphub_token', token);
     }
 
-    // Remove JWT token
     removeToken() {
         localStorage.removeItem('jpphub_token');
     }
 
-    // Generic fetch wrapper with auth headers
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
-        const token = this.getToken();
+        console.log('[API] request:', url, options);
 
+        const token = this.getToken();
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -55,42 +52,37 @@ class ApiClient {
             config.headers.Authorization = `Bearer ${token}`;
         }
 
-        try {
-            const response = await fetch(url, config);
+        const response = await fetch(url, config);
+        const text = await response.text();
+        let payload = null;
 
-            // Handle unauthorized (token expired)
+        try {
+            payload = text ? JSON.parse(text) : null;
+        } catch (error) {
+            console.error('[API] invalid JSON response:', text);
+            throw new Error('Respuesta inválida del servidor');
+        }
+
+        console.log('[API] response:', url, response.status, payload);
+
+        if (!response.ok) {
             if (response.status === 401) {
                 this.removeToken();
-                window.location.href = '/frontend/pages/login.html';
-                throw new Error('Token expired');
             }
 
-            if (!response.ok) {
-                const error = await response.json().catch(() => ({ message: 'Network error' }));
-                throw new Error(error.message || `HTTP ${response.status}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('API request failed:', error);
-            throw error;
+            const message = payload?.message || payload?.error || `HTTP ${response.status}`;
+            throw new Error(message || 'Error en la petición');
         }
+
+        return payload;
     }
 
-    // Auth endpoints
     async login(email, password) {
-        const response = await fetch(`${this.baseURL}/auth/login`, {
+        const payload = await this.request('/auth/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
 
-        if (!response.ok) {
-            const error = await response.json().catch(() => ({ message: 'Login failed' }));
-            throw new Error(error.message);
-        }
-
-        const payload = await response.json();
         const data = payload.data || payload;
         if (data.token) {
             this.setToken(data.token);
@@ -99,18 +91,11 @@ class ApiClient {
     }
 
     async register(userData) {
-        const response = await fetch(`${this.baseURL}/auth/register`, {
+        const payload = await this.request('/auth/register', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
         });
 
-        if (!response.ok) {
-            const error = await response.json().catch(() => ({ message: 'Registration failed' }));
-            throw new Error(error.message);
-        }
-
-        const payload = await response.json();
         const data = payload.data || payload;
         if (data.token) {
             this.setToken(data.token);
@@ -122,7 +107,6 @@ class ApiClient {
         return this.request('/auth/refresh', { method: 'POST' });
     }
 
-    // User endpoints
     async getCurrentUser() {
         return this.request('/users/profile');
     }
@@ -134,7 +118,6 @@ class ApiClient {
         });
     }
 
-    // Article/Post endpoints
     async getArticles(params = {}) {
         const queryString = new URLSearchParams(params).toString();
         return this.request(`/articles${queryString ? `?${queryString}` : ''}`);
@@ -166,12 +149,10 @@ class ApiClient {
         return this.request(`/articles/${id}/view`, { method: 'PATCH' });
     }
 
-    // Category endpoints
     async getCategories() {
         return this.request('/categories');
     }
 
-    // Subscription endpoints
     async getSubscriptions() {
         return this.request('/subscriptions');
     }
@@ -183,7 +164,6 @@ class ApiClient {
         });
     }
 
-    // Payment endpoints
     async getPayments() {
         return this.request('/payments');
     }
@@ -195,7 +175,6 @@ class ApiClient {
         });
     }
 
-    // Admin endpoints
     async getAllUsers() {
         return this.request('/admin/users');
     }
@@ -212,7 +191,6 @@ class ApiClient {
         return this.request('/admin/activity');
     }
 
-    // Contact endpoint
     async sendContactMessage(messageData) {
         return this.request('/contact', {
             method: 'POST',
@@ -220,15 +198,11 @@ class ApiClient {
         });
     }
 
-    // Health check
     async healthCheck() {
         return this.request('/health');
     }
 }
 
-// Create singleton instance
 const api = new ApiClient();
-
-// Export for use in other files
 window.ApiClient = ApiClient;
 window.api = api;
