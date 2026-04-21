@@ -20,15 +20,31 @@ Este proyecto está estructurado con una arquitectura moderna que separa complet
 
 ```
 JppHub/
-├── frontend/                    # Interfaz de usuario
-│   ├── index.html              # Página principal
-│   ├── css/
-│   │   └── style.css           # Estilos profesionales
-│   ├── js/
-│   │   ├── main.js             # JavaScript principal
-│   │   └── admin.js            # Funcionalidades de administración
-│   └── articles/               # Contenido de artículos
-│       └── articulo-1.html
+├── frontend/                    # Interfaz de usuario React
+│   ├── src/
+│   │   ├── components/          # Componentes reutilizables
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   └── Card.jsx
+│   │   ├── pages/               # Páginas de la aplicación
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Admin.jsx
+│   │   │   ├── Posts.jsx
+│   │   │   └── PostDetail.jsx
+│   │   ├── context/             # Contextos de React
+│   │   │   └── AuthContext.jsx
+│   │   ├── services/            # Servicios API
+│   │   │   └── api.js
+│   │   ├── App.jsx              # Componente principal
+│   │   ├── main.jsx             # Punto de entrada
+│   │   └── index.css            # Estilos globales
+│   ├── package.json             # Dependencias frontend
+│   ├── vite.config.js           # Configuración Vite
+│   ├── tailwind.config.js       # Configuración Tailwind
+│   └── postcss.config.js        # Configuración PostCSS
 ├── backend/                    # Lógica del servidor
 │   ├── controllers/            # Controladores de rutas
 │   ├── routes/                 # Definición de rutas API
@@ -49,9 +65,42 @@ JppHub/
 
 ---
 
+## 🎨 Frontend UI
+
+### Design Inspiration
+- **Netflix**: Content browsing UI with hero banners and horizontal scroll sections
+- **Stripe Dashboard**: Clean SaaS admin UI with professional layout and spacing
+
+### Pages Created
+- **Home**: Netflix-style homepage with featured post banner, trending/latest sections, and category filters
+- **Login/Register**: Centered card forms with smooth transitions and error handling
+- **Dashboard**: Stripe-style dashboard with stats cards and recent activity
+- **Admin Panel**: Tables for managing users, posts, and payments with CRUD actions
+- **Posts**: Grid layout with category filters and card hover effects
+- **Post Detail**: Full post view with image, content, and metadata
+
+### Components Created
+- **Navbar**: Top navigation with logo, search, and user dropdown
+- **Sidebar**: Dashboard-style navigation menu (Stripe inspired)
+- **Card**: Reusable post cards with hover animations
+
+### Auth Flow
+- JWT token storage in localStorage
+- Automatic token attachment to API requests
+- Protected routes with redirect to login
+- User context management with React Context
+
+### API Integration
+- Axios for HTTP requests to backend API (`http://localhost:4000/api/`)
+- Endpoints: `/auth/login`, `/auth/register`, `/articles`, `/auth/profile`
+- Error handling and loading states
+- Fallback dummy data for development
+
+---
+
 ## 🛠️ Tecnologías Utilizadas
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Frontend**: React, Vite, TailwindCSS
 - **Backend**: Node.js, Express.js
 - **Servidor Web**: Nginx
 - **Containerización**: Docker & Docker Compose
@@ -95,7 +144,7 @@ JppHub/
 
 | Servicio | Puerto | Descripción |
 |----------|--------|-------------|
-| Frontend | 3000 | Servidor de desarrollo del frontend |
+| Frontend | 5173 | Servidor de desarrollo Vite |
 | Backend | 4000 | API del servidor |
 | Nginx | 8080 | Servidor web principal |
 
