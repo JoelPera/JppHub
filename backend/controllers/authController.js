@@ -3,6 +3,7 @@ import AuthService from '../services/authService.js';
 export class AuthController {
     static async register(req, res, next) {
         try {
+            console.log('[AUTH] register payload:', req.body);
             const payload = req.body;
             const authResult = await AuthService.register(payload, req);
             res.status(201).json({
@@ -11,6 +12,7 @@ export class AuthController {
                 data: authResult
             });
         } catch (error) {
+            console.error('[AUTH] register error:', error);
             next(error);
         }
     }

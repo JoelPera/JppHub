@@ -108,7 +108,7 @@ class ApiClient {
     }
 
     async getCurrentUser() {
-        return this.request('/users/profile');
+        return this.request('/auth/me');
     }
 
     async updateUser(userData) {

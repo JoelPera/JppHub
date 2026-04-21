@@ -3,15 +3,13 @@ import pool from '../database/db.js';
 export const sessionRepository = {
     async create(sessionData) {
         const sql = `
-            INSERT INTO sessions (id, user_id, token, user_agent, ip_address, expires_at, revoked, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, false, NOW(), NOW())
+            INSERT INTO sessions (id, user_id, token, expires_at, created_at)
+            VALUES (?, ?, ?, ?, NOW())
         `;
         const values = [
             sessionData.id,
             sessionData.userId,
             sessionData.token,
-            sessionData.userAgent,
-            sessionData.ipAddress,
             sessionData.expiresAt
         ];
         await pool.query(sql, values);
@@ -20,7 +18,7 @@ export const sessionRepository = {
 
     async findByToken(token) {
         const [rows] = await pool.query(`
-            SELECT id, user_id AS userId, token, user_agent AS userAgent, ip_address AS ipAddress, expires_at AS expiresAt, revoked, created_at AS createdAt, updated_at AS updatedAt
+            SELECT id, user_id AS userId, token, expires_at AS expiresAt, created_at AS createdAt
             FROM sessions
             WHERE token = ?
             LIMIT 1
