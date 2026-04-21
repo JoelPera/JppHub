@@ -1,16 +1,159 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JppHub</title>
+  <meta name="description"
+    content="JppHub - Plataforma de crecimiento profesional en IA y automatización. Recursos, guías y flujos prácticos para dominar herramientas modernas." />
+  <meta name="keywords"
+    content="IA, inteligencia artificial, automatización, n8n, ChatGPT, machine learning, desarrollo profesional" />
+  <meta name="author" content="JppHub" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="JppHub - Domina IA y Automatización" />
+  <meta property="og:description"
+    content="Recursos, guías y flujos prácticos para optimizar tu trabajo y crear soluciones inteligentes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jpphub.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JppHub - Domina IA y Automatización" />
+  <meta name="twitter:description"
+    content="Recursos, guías y flujos prácticos para optimizar tu trabajo y crear soluciones inteligentes." />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>JppHub - Aprende IA y Automatización</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <header class="navbar" role="banner">
+    <div class="logo">JppHub</div>
+
+    <nav role="navigation" aria-label="Navegación principal">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#ia">IA</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#automatizacion">Automatización</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="auth-buttons">
+      <button class="login-btn" aria-label="Iniciar sesión">Ingresar</button>
+      <button class="register-btn" aria-label="Crear cuenta nueva">Regístrate</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="inicio" class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">Plataforma de crecimiento profesional</span>
+        <h1>Domina IA y automatización con proyectos reales</h1>
+        <p class="hero-subtitle">Recursos, guías y flujos prácticos para optimizar tu trabajo y crear soluciones
+          inteligentes desde cero.</p>
+        <a href="#ia" class="btn-primary" aria-label="Descubre herramientas de IA">Descubre herramientas</a>
+      </div>
+    </section>
+
+    <section id="ia" class="section" aria-labelledby="ia-title">
+      <div class="section-header">
+        <h2 id="ia-title">Herramientas de IA</h2>
+        <p>Selecciona las herramientas clave para crear soluciones modernas con automatización, datos y productividad.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>ChatGPT</h3>
+          <p>Diseña prompts efectivos y automatiza tareas con inteligencia conversacional.</p>
+        </article>
+
+        <article class="card">
+          <h3>n8n</h3>
+          <p>Construye flujos de trabajo sin código y conecta sistemas en minutos.</p>
+        </article>
+
+        <article class="card">
+          <h3>IA para negocios</h3>
+          <p>Implementa casos de uso reales para mejorar procesos internos y tomar mejores decisiones.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="blog" class="section" aria-labelledby="blog-title">
+      <div class="section-header">
+        <h2 id="blog-title">Últimos artículos</h2>
+        <p>Contenido actualizado con estrategias, pasos prácticos y tendencias actuales en IA y automatización.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Qué es la IA en 2026</h3>
+          <p>Una guía clara con ejemplos prácticos para entender su impacto real.</p>
+        </article>
+
+        <article class="card">
+          <h3>Automatiza tu empresa</h3>
+          <p>Flujos de trabajo eficientes con n8n para ahorrar tiempo y reducir errores.</p>
+        </article>
+
+        <article class="card">
+          <h3>Gana dinero con IA</h3>
+          <p>Modelos viables de monetización para productos y servicios inteligentes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="automatizacion" class="section dark" aria-labelledby="auto-title">
+      <div class="section-header">
+        <h2 id="auto-title">Automatización inteligente</h2>
+        <p>Construye sistemas automáticos con APIs, bots y flujos que liberan tiempo y escalan operaciones.</p>
+      </div>
+
+      <ul class="feature-list">
+        <li>Integraciones confiables entre herramientas y datos.</li>
+        <li>Flujos automatizados para tareas recurrentes.</li>
+        <li>Resultados medibles y escalables.</li>
+      </ul>
+    </section>
+
+    <section id="contacto" class="section" aria-labelledby="contact-title">
+      <div class="section-header">
+        <h2 id="contact-title">Contacto</h2>
+        <p>¿Tienes una idea o quieres asesoría? Escríbenos y te contactamos.</p>
+      </div>
+
+      <form action="#" method="post" aria-labelledby="contact-title">
+        <label for="name">
+          Nombre
+          <input type="text" id="name" name="name" placeholder="Tu nombre" required aria-describedby="name-help">
+          <span id="name-help" class="sr-only">Ingresa tu nombre completo</span>
+        </label>
+        <label for="email">
+          Correo electrónico
+          <input type="email" id="email" name="email" placeholder="Tu email" required aria-describedby="email-help">
+          <span id="email-help" class="sr-only">Ingresa una dirección de correo electrónico válida</span>
+        </label>
+        <label for="message">
+          Mensaje
+          <textarea id="message" name="message" placeholder="Mensaje" rows="5" required
+            aria-describedby="message-help"></textarea>
+          <span id="message-help" class="sr-only">Describe tu consulta o idea</span>
+        </label>
+        <button type="submit" aria-label="Enviar mensaje de contacto">Enviar mensaje</button>
+      </form>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>© 2026 JppHub. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="utils/api.js"></script>
+  <script src="utils/auth.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
