@@ -14,6 +14,11 @@ services:
       dockerfile: docker/Dockerfile.backend
     ports:
       - "4000:4000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: Calvotron27.
+      DB_NAME: jpphub
 
   nginx:
     build:
