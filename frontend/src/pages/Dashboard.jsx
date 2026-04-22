@@ -7,6 +7,7 @@ import { Plus, Pencil, Eye, FileText, CheckCircle2, Clock, XCircle, BarChart3, A
 import Navbar from '../components/layout/Navbar'
 import Modal from '../components/ui/Modal'
 import StatusBadge from '../components/ui/StatusBadge'
+import ImageUpload from '../components/ui/ImageUpload'
 import { useAuth } from '../contexts/AuthContext'
 import { api } from '../lib/api'
 
@@ -31,7 +32,7 @@ export default function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false)
   const [editing, setEditing] = useState(null)
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState({ title: '', description: '', category: CATEGORIES[0], content: '' })
+  const [form, setForm] = useState({ title: '', description: '', category: CATEGORIES[0], content: '', coverImage: '' })
 
   const fetchArticles = async () => {
     setLoading(true)
@@ -59,12 +60,18 @@ export default function Dashboard() {
 
   const openNew = () => {
     setEditing(null)
-    setForm({ title: '', description: '', category: CATEGORIES[0], content: '' })
+    setForm({ title: '', description: '', category: CATEGORIES[0], content: '', coverImage: '' })
     setModalOpen(true)
   }
   const openEdit = (a) => {
     setEditing(a)
-    setForm({ title: a.title, description: a.description || '', category: a.category || CATEGORIES[0], content: a.content || '' })
+    setForm({
+      title: a.title,
+      description: a.description || '',
+      category: a.category || CATEGORIES[0],
+      content: a.content || '',
+      coverImage: a.coverImage || '',
+    })
     setModalOpen(true)
   }
 
@@ -214,6 +221,12 @@ export default function Dashboard() {
         size="xl"
       >
         <form onSubmit={save} className="space-y-5" data-testid="article-form">
+          <ImageUpload
+            value={form.coverImage}
+            onChange={(url) => setForm({ ...form, coverImage: url })}
+            label="Imagen de portada (opcional)"
+            testid="article-cover"
+          />
           <div>
             <label className="text-sm font-medium text-ink-700 dark:text-ink-300 mb-2 block">Título</label>
             <input

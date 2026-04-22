@@ -7,6 +7,8 @@ import Articles from './pages/Articles'
 import ArticleDetail from './pages/ArticleDetail'
 import Dashboard from './pages/Dashboard'
 import Admin from './pages/Admin'
+import Profile from './pages/Profile'
+import AuthorPublic from './pages/AuthorPublic'
 import NotFound from './pages/NotFound'
 import { useAuth } from './contexts/AuthContext'
 
@@ -47,7 +49,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/articulos" element={<Articles />} />
         <Route path="/articulos/:slug" element={<ArticleDetail />} />
+        <Route path="/autor/:id" element={<AuthorPublic />} />
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+        <Route path="/perfil" element={<RequireAuth><Profile /></RequireAuth>} />
         <Route path="/admin" element={<RequireAuth adminOnly><Admin /></RequireAuth>} />
         <Route path="*" element={<NotFound />} />
       </Routes>

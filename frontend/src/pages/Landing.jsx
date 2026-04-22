@@ -343,24 +343,31 @@ export default function Landing() {
               >
                 <Link
                   to={`/articulos/${a.slug}`}
-                  className="card p-7 block group hover:-translate-y-1 hover:shadow-lift h-full"
+                  className="card overflow-hidden block group hover:-translate-y-1 hover:shadow-lift h-full"
                   data-testid={`landing-article-${a.slug}`}
                 >
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="badge bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300">
-                      {a.category || 'General'}
-                    </span>
-                    <span className="text-xs font-mono text-ink-400 flex items-center gap-1">
-                      <Eye size={12}/> {a.views || 0}
-                    </span>
-                  </div>
-                  <h3 className="heading text-2xl leading-tight mb-3 group-hover:underline underline-offset-4 decoration-2">
-                    {a.title}
-                  </h3>
-                  <p className="text-ink-600 dark:text-ink-400 line-clamp-3 mb-6 leading-relaxed">{a.description}</p>
-                  <div className="flex items-center justify-between pt-4 border-t border-ink-200 dark:border-ink-800">
-                    <span className="text-sm text-ink-500">{a.authorName || a.author}</span>
-                    <ArrowUpRight size={16} className="text-ink-400 group-hover:text-ink-900 dark:group-hover:text-white group-hover:rotate-0 -rotate-45 transition-all"/>
+                  {a.coverImage && (
+                    <div className="aspect-video overflow-hidden">
+                      <img src={a.coverImage} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                    </div>
+                  )}
+                  <div className="p-7">
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="badge bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300">
+                        {a.category || 'General'}
+                      </span>
+                      <span className="text-xs font-mono text-ink-400 flex items-center gap-1">
+                        <Eye size={12}/> {a.views || 0}
+                      </span>
+                    </div>
+                    <h3 className="heading text-2xl leading-tight mb-3 group-hover:underline underline-offset-4 decoration-2">
+                      {a.title}
+                    </h3>
+                    <p className="text-ink-600 dark:text-ink-400 line-clamp-3 mb-6 leading-relaxed">{a.description}</p>
+                    <div className="flex items-center justify-between pt-4 border-t border-ink-200 dark:border-ink-800">
+                      <span className="text-sm text-ink-500">{a.authorName || a.author}</span>
+                      <ArrowUpRight size={16} className="text-ink-400 group-hover:text-ink-900 dark:group-hover:text-white group-hover:rotate-0 -rotate-45 transition-all"/>
+                    </div>
                   </div>
                 </Link>
               </motion.div>

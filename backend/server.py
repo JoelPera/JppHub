@@ -54,8 +54,6 @@ async def lifespan(_: FastAPI):
         ["node", "server.js"],
         cwd=BACKEND_DIR,
         env=env,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
         preexec_fn=os.setsid,
     )
     ok = await _wait_for_node()

@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { Moon, Sun, Menu, X, LogOut, LayoutDashboard, User, Search } from 'lucide-react'
+import { Moon, Sun, Menu, X, LogOut, LayoutDashboard, User, Search, UserCircle } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 import { cn } from '../../lib/cn'
@@ -83,6 +83,9 @@ export default function Navbar({ variant = 'public' }) {
                 <LayoutDashboard size={16} />
                 Dashboard
               </Link>
+              <Link to="/perfil" className="btn-ghost" data-testid="nav-profile-btn" title="Mi perfil">
+                <UserCircle size={18}/>
+              </Link>
               {isAdmin && (
                 <Link to="/admin" className="btn-secondary" data-testid="nav-admin-btn">
                   Admin
@@ -125,6 +128,9 @@ export default function Navbar({ variant = 'public' }) {
               <>
                 <Link to="/dashboard" className="btn-ghost justify-start" data-testid="mobile-dashboard-btn">
                   <LayoutDashboard size={16}/> Dashboard
+                </Link>
+                <Link to="/perfil" className="btn-ghost justify-start" data-testid="mobile-profile-btn">
+                  <UserCircle size={16}/> Mi perfil
                 </Link>
                 {isAdmin && <Link to="/admin" className="btn-secondary justify-start">Admin</Link>}
                 <button onClick={() => { logout(); nav('/') }} className="btn-outline justify-start">

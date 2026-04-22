@@ -38,6 +38,11 @@ export function AuthProvider({ children }) {
     setUser(d.user)
     return d
   }
+  const updateMe = async (data) => {
+    const updated = await api.updateProfile(data)
+    setUser(updated)
+    return updated
+  }
   const logout = () => {
     api.logout()
     setUser(null)
@@ -46,7 +51,7 @@ export function AuthProvider({ children }) {
   const isAdmin = user?.role === 'admin'
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, isAdmin, updateMe }}>
       {children}
     </AuthContext.Provider>
   )

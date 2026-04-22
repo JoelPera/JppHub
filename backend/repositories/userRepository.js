@@ -19,9 +19,17 @@ export const userRepository = {
         return rows[0] || null;
     },
 
+    async findPublicProfile(id) {
+        const [rows] = await pool.query(`
+            SELECT id, name, role, avatar_url AS avatarUrl, bio, created_at AS createdAt
+            FROM users WHERE id = ? LIMIT 1
+        `, [id]);
+        return rows[0] || null;
+    },
+
     async findAll() {
         const [rows] = await pool.query(`
-            SELECT id, name, email, role, status, avatar_url AS avatarUrl,
+            SELECT id, name, email, role, status, avatar_url AS avatarUrl, bio,
                    created_at AS createdAt, last_login AS lastLogin
             FROM users
             ORDER BY created_at DESC
@@ -48,6 +56,18 @@ export const userRepository = {
 
     async updateRole(id, role) {
         await pool.query('UPDATE users SET role = ? WHERE id = ?', [role, id]);
+        return this.findById(id);
+    },
+
+    async updateProfile(id, { name, bio, avatarUrl }) {
+        const fields = [];
+        const values = [];
+        if (name !== undefined) { fields.push('name = ?'); values.push(name); }
+        if (bio !== undefined) { fields.push('bio = ?'); values.push(bio); }
+        if (avatarUrl !== undefined) { fields.push('avatar_url = ?'); values.push(avatarUrl); }
+        if (fields.length === 0) return this.findById(id);
+        values.push(id);
+        await pool.query(`UPDATE users SET ${fields.join(', ')}, updated_at = NOW() WHERE id = ?`, values);
         return this.findById(id);
     },
 

@@ -70,6 +70,28 @@ export const api = {
     const r = await request('/auth/me')
     return r.data
   },
+  async updateProfile(data) {
+    const r = await request('/users/me', { method: 'PATCH', body: data })
+    const u = r.data
+    if (u) userStore.set(u)
+    return u
+  },
+  async getPublicProfile(userId) {
+    return (await request(`/users/${userId}/profile`, { auth: false })).data
+  },
+  async uploadFile(file) {
+    const form = new FormData()
+    form.append('file', file)
+    const token = tokenStore.get()
+    const res = await fetch(`${API_BASE}/uploads`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: form,
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(data?.message || `Error ${res.status}`)
+    return data.data
+  },
   logout() {
     tokenStore.clear()
     userStore.clear()

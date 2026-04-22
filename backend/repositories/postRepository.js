@@ -42,7 +42,7 @@ export const postRepository = {
             SELECT ${SELECT_FIELDS}
             FROM posts p LEFT JOIN users u ON u.id = p.author_id
             ${where}
-            ORDER BY p.created_at DESC
+            ORDER BY COALESCE(p.published_at, p.created_at) DESC
         `, values);
         return rows;
     },

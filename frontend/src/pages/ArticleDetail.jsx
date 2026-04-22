@@ -105,15 +105,15 @@ export default function ArticleDetail() {
           </p>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-10 pb-10 border-b border-ink-200 dark:border-ink-800 text-sm text-ink-500">
-            <div className="flex items-center gap-3">
+            <Link to={article.authorId ? `/autor/${article.authorId}` : '#'} className="flex items-center gap-3 group" data-testid="article-author-link">
               <div className="w-10 h-10 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 flex items-center justify-center font-cabinet font-bold">
                 {(article.authorName || article.author || 'A').split(' ').map((n) => n[0]).slice(0, 2).join('')}
               </div>
               <div>
-                <p className="font-cabinet font-semibold text-ink-900 dark:text-white">{article.authorName || article.author || 'Anónimo'}</p>
-                <p className="text-xs">Autor</p>
+                <p className="font-cabinet font-semibold text-ink-900 dark:text-white group-hover:underline underline-offset-4">{article.authorName || article.author || 'Anónimo'}</p>
+                <p className="text-xs">Autor · Ver perfil</p>
               </div>
-            </div>
+            </Link>
             <span className="flex items-center gap-1.5"><Calendar size={14}/> {formatDate(article.publishedAt || article.createdAt)}</span>
             <span className="flex items-center gap-1.5"><Clock size={14}/> {rt} min de lectura</span>
             <span className="flex items-center gap-1.5"><Eye size={14}/> {article.views || 0}</span>
@@ -122,6 +122,18 @@ export default function ArticleDetail() {
             </button>
           </div>
         </motion.div>
+
+        {article.coverImage && (
+          <motion.img
+            src={article.coverImage}
+            alt={article.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="w-full aspect-video object-cover rounded-2xl mt-10"
+            data-testid="article-cover-image"
+          />
+        )}
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -132,9 +144,9 @@ export default function ArticleDetail() {
           dangerouslySetInnerHTML={{ __html: article.content || '' }}
         />
 
-        <div className="mt-20 pt-10 border-t border-ink-200 dark:border-ink-800 flex items-center justify-between">
-          <Link to="/articulos" className="btn-outline" data-testid="article-back-btn">
-            <ArrowLeft size={14}/> Más artículos
+        <div className="mt-20 pt-10 border-t border-ink-200 dark:border-ink-800 flex items-center justify-between gap-4 flex-wrap">
+          <Link to={article.authorId ? `/autor/${article.authorId}` : '/articulos'} className="btn-outline" data-testid="article-author-bottom-link">
+            {article.authorId ? <>Ver más de {(article.authorName || '').split(' ')[0]}</> : <><ArrowLeft size={14}/> Más artículos</>}
           </Link>
           <button onClick={share} className="btn-primary" data-testid="article-share-btn-bottom">
             <Share2 size={14}/> Compartir

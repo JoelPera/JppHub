@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { postRepository } from '../repositories/postRepository.js';
+import { userRepository } from '../repositories/userRepository.js';
+import { sendReviewNotification } from './emailService.js';
 
 export class ArticleService {
     // Público: solo aprobados
@@ -68,12 +70,29 @@ export class ArticleService {
     }
 
     static async reviewArticle(id, action, adminId, note) {
-        const map = { approve: 'approved', reject: 'rejected', review: 'in_review' };
+        const map = { approve: 'approved', reject: 'rejected', review: 'in_review', request_changes: 'in_review' };
         const status = map[action];
         if (!status) {
             const err = new Error('Acción de revisión inválida'); err.status = 400; throw err;
         }
-        return postRepository.update(id, { status, reviewedBy: adminId, reviewNote: note || null });
+        const updated = await postRepository.update(id, { status, reviewedBy: adminId, reviewNote: note || null });
+
+        // Notify author by email (non-blocking, never fails the action)
+        if (updated && updated.authorId) {
+            const author = await userRepository.findById(updated.authorId).catch(() => null);
+            const reviewer = await userRepository.findById(adminId).catch(() => null);
+            if (author?.email) {
+                sendReviewNotification({
+                    action,
+                    article: updated,
+                    author,
+                    note,
+                    reviewerName: reviewer?.name || 'El equipo editorial'
+                }).catch((e) => console.error('[email] dispatch error:', e?.message || e));
+            }
+        }
+
+        return updated;
     }
 
     static async deleteArticle(id) {
