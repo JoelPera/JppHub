@@ -21,6 +21,10 @@ export class ArticleService {
         return postRepository.findById(id);
     }
 
+    static async getArticleBySlug(slug) {
+        return postRepository.findBySlug(slug);
+    }
+
     // Submit por un autor: va a estado 'pending'
     static async submitArticle(articleData, user) {
         return postRepository.create({

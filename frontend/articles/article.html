@@ -3,251 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artículo - JppHub</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Artículo · JppHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-        .article-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: var(--text);
-        }
-
-        .article-header {
-            background: rgba(15, 23, 42, 0.95);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .article-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .article-nav h1 {
-            color: var(--text);
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn-secondary {
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface-hover);
-            border-color: var(--border-hover);
-        }
-
-        .article-main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .article-content {
-            background: var(--surface-strong);
-            border-radius: var(--radius-large);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .article-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
+        .article-page { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+        .article-back { color: var(--text-muted); font-size: .92rem; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: .4rem; }
+        .article-back:hover { color: var(--primary); }
+        .article-meta-top { display: flex; gap: .8rem; align-items: center; color: var(--text-muted); font-size: .88rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .article-title { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; letter-spacing: -.02em; color: var(--text-strong); margin: 0 0 1rem; line-height: 1.15; }
+        .article-description { font-size: 1.2rem; color: var(--text-muted); margin: 0 0 2.5rem; border-left: 3px solid var(--primary); padding-left: 1rem; }
         .article-body {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.12rem;
             line-height: 1.8;
             color: var(--text);
-            font-size: 1.1rem;
         }
-
-        .article-body h2 {
-            color: var(--text);
-            margin: 2rem 0 1rem 0;
-            font-size: 1.8rem;
-        }
-
-        .article-body h3 {
-            color: var(--text);
-            margin: 1.5rem 0 1rem 0;
-            font-size: 1.4rem;
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-        }
-
-        .article-body ul,
-        .article-body ol {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        .article-body li {
-            margin-bottom: 0.5rem;
-        }
-
-        .article-body blockquote {
-            border-left: 4px solid var(--primary);
-            padding-left: 1rem;
-            margin: 1.5rem 0;
-            font-style: italic;
-            color: var(--text-muted);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 4rem;
-            color: var(--text-muted);
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            padding: 1rem;
-            border-radius: var(--radius);
+        .article-body h1, .article-body h2, .article-body h3 {
+            font-family: var(--font-display);
+            margin-top: 2.5rem;
             margin-bottom: 1rem;
         }
-
-        @media (max-width: 768px) {
-            .article-nav {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .nav-actions {
-                justify-content: center;
-            }
-
-            .article-title {
-                font-size: 2rem;
-            }
-
-            .article-main {
-                padding: 1rem;
-            }
-
-            .article-content {
-                padding: 1.5rem;
-            }
+        .article-body h2 { font-size: 1.7rem; }
+        .article-body h3 { font-size: 1.3rem; }
+        .article-body p { margin: 0 0 1.3rem; }
+        .article-body a { color: var(--primary); text-decoration: underline; }
+        .article-body ul, .article-body ol { padding-left: 1.5rem; margin: 0 0 1.3rem; }
+        .article-body li { margin-bottom: .5rem; }
+        .article-body blockquote {
+            border-left: 3px solid var(--primary);
+            padding: .5rem 0 .5rem 1.5rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 1.5rem 0;
+        }
+        .article-body code { background: var(--surface); padding: .15rem .35rem; border-radius: 4px; font-size: .9em; }
+        .article-body pre { background: var(--bg-elev); padding: 1rem; border-radius: var(--radius); overflow-x: auto; border: 1px solid var(--border); }
+        .article-body img { border-radius: var(--radius); margin: 1.5rem 0; }
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: .9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .author-card {
+            display: flex; align-items: center; gap: .75rem;
         }
     </style>
 </head>
 <body>
-    <div class="article-container">
-        <header class="article-header">
-            <nav class="article-nav">
-                <h1>JppHub</h1>
-                <div class="nav-actions">
-                    <a href="../index.html" class="btn-secondary">← Volver al inicio</a>
-                    <a href="../pages/dashboard.html" class="btn-secondary">Dashboard</a>
-                </div>
-            </nav>
-        </header>
+    <header class="navbar">
+        <a href="/" class="logo" data-testid="article-nav-logo">JppHub</a>
+        <nav aria-label="Navegación principal">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/#blog">Artículos</a></li>
+                <li><a href="/#pricing">Planes</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons" id="authButtons">
+            <a href="/login" class="login-btn">Ingresar</a>
+            <a href="/register" class="register-btn">Empezar</a>
+        </div>
+    </header>
 
-        <main class="article-main">
-            <div class="article-content">
-                <div id="article-content">
-                    <div class="loading">Cargando artículo...</div>
-                </div>
+    <main>
+        <article class="article-page">
+            <a href="/#blog" class="article-back" data-testid="article-back-link">← Volver a artículos</a>
+            <div id="article-content" data-testid="article-content">
+                <p style="color: var(--text-muted); text-align: center; padding: 3rem;">Cargando artículo…</p>
             </div>
-        </main>
-    </div>
+        </article>
+    </main>
 
-    <script src="../utils/api.js"></script>
-    <script src="../utils/auth.js"></script>
+    <footer>
+        <p>© 2026 JppHub</p>
+    </footer>
+
+    <script src="/utils/api.js"></script>
+    <script src="/utils/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get('id');
+    (function(){
+        function esc(s){ return String(s??'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+        function fmtDate(s){ try { return new Date(s).toLocaleDateString('es-ES',{day:'2-digit', month:'long', year:'numeric'});} catch { return ''; }}
 
-            if (!articleId) {
-                showError('ID de artículo no especificado');
-                return;
-            }
+        // Contenido del artículo puede venir como HTML (desde Quill) o texto plano
+        function renderBody(content) {
+            if (!content) return '';
+            // Detect if content already has HTML tags
+            const hasHtml = /<\/?[a-z][\s\S]*>/i.test(content);
+            if (hasHtml) return content; // Quill output ya sanitizado en el backend / confiamos en autores revisados
+            // Texto plano: preservar saltos de línea
+            return esc(content).split(/\n\n+/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+        }
 
-            loadArticle(articleId);
-        });
-
-        async function loadArticle(articleId) {
+        async function load() {
+            const slug = window.location.pathname.replace(/^\/articles\//, '').replace(/\/$/, '');
+            const container = document.getElementById('article-content');
+            if (!slug) { container.innerHTML = '<p>Artículo no encontrado.</p>'; return; }
             try {
-                // Increment view count
-                try {
-                    await api.incrementArticleViews(articleId);
-                } catch (viewError) {
-                    console.warn('Could not increment views:', viewError);
-                }
-
-                // Load article data
-                const article = await api.getArticle(articleId);
-
-                renderArticle(article);
-            } catch (error) {
-                console.error('Error loading article:', error);
-                showError('Error al cargar el artículo. Puede que no exista o haya sido eliminado.');
+                const a = await api.getArticleBySlug(slug);
+                document.title = `${a.title} · JppHub`;
+                container.innerHTML = `
+                    <div class="article-meta-top">
+                        <span class="badge badge-approved">${esc(a.category || 'General')}</span>
+                        <span>${fmtDate(a.publishedAt || a.createdAt)}</span>
+                        <span>·</span>
+                        <span>${a.views || 0} vistas</span>
+                    </div>
+                    <h1 class="article-title" data-testid="article-detail-title">${esc(a.title)}</h1>
+                    <p class="article-description" data-testid="article-detail-description">${esc(a.description || '')}</p>
+                    <div class="article-body" data-testid="article-detail-body">${renderBody(a.content)}</div>
+                    <div class="article-footer">
+                        <div class="author-card">
+                            <div class="avatar">${esc((a.authorName || a.author || 'A').slice(0,1).toUpperCase())}</div>
+                            <div>
+                                <div style="color: var(--text);">${esc(a.authorName || a.author || 'Anónimo')}</div>
+                                <div style="color: var(--text-subtle); font-size: .85rem;">Publicado en JppHub</div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="/register" class="btn-secondary btn-sm">Publica tú también →</a>
+                        </div>
+                    </div>
+                `;
+                // Incrementar vistas silenciosamente
+                api.request(`/articles/${a.id}/views`, { method: 'PATCH' }).catch(() => {});
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="empty" data-testid="article-not-found">
+                        <h2>Artículo no encontrado</h2>
+                        <p>Este artículo no existe o aún no ha sido aprobado.</p>
+                        <a href="/" class="btn-primary">← Volver al inicio</a>
+                    </div>`;
             }
         }
 
-        function renderArticle(article) {
-            const container = document.getElementById('article-content');
-            const publishDate = new Date(article.created_at).toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            container.innerHTML = `
-                <h1 class="article-title">${article.title}</h1>
-                <div class="article-meta">
-                    <span>Publicado el ${publishDate}</span>
-                    <span>${article.views || 0} vistas</span>
-                </div>
-                <div class="article-body">
-                    ${article.content || article.excerpt || 'Contenido no disponible'}
-                </div>
-            `;
+        function updateNavbar() {
+            const el = document.getElementById('authButtons');
+            if (!el) return;
+            if (auth.isAuthenticated) {
+                const u = auth.getUser() || {};
+                el.innerHTML = `
+                    <a href="/dashboard" class="btn-secondary btn-sm">Dashboard</a>
+                    <button class="btn-danger btn-sm" onclick="auth.logout()">Salir</button>
+                `;
+            }
         }
 
-        function showError(message) {
-            const container = document.getElementById('article-content');
-            container.innerHTML = `
-                <div class="error-message">
-                    ${message}
-                </div>
-                <a href="../index.html" class="btn-secondary" style="margin-top: 1rem; display: inline-block;">Volver al inicio</a>
-            `;
-        }
+        document.addEventListener('DOMContentLoaded', () => { updateNavbar(); load(); });
+    })();
     </script>
 </body>
 </html>

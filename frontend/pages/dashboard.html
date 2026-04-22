@@ -7,7 +7,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Overrides Quill para tema oscuro */
+        #editor-container { height: 320px; background: var(--bg-elev-2); color: var(--text); border-radius: 0 0 var(--radius) var(--radius); }
+        .ql-toolbar.ql-snow { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; }
+        .ql-container.ql-snow { border: 1px solid var(--border); border-top: none; }
+        .ql-editor { color: var(--text); font-family: var(--font); min-height: 280px; font-size: 1rem; line-height: 1.6; }
+        .ql-editor.ql-blank::before { color: var(--text-subtle); font-style: normal; }
+        .ql-snow .ql-stroke { stroke: var(--text-muted); }
+        .ql-snow .ql-fill { fill: var(--text-muted); }
+        .ql-snow .ql-picker { color: var(--text-muted); }
+        .ql-snow .ql-picker-options { background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); }
+        .ql-snow.ql-toolbar button:hover .ql-stroke,
+        .ql-snow.ql-toolbar button.ql-active .ql-stroke { stroke: var(--primary); }
+        .ql-snow.ql-toolbar button:hover .ql-fill,
+        .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: var(--primary); }
+        .ql-snow .ql-editor blockquote { border-left: 3px solid var(--primary); color: var(--text-muted); padding-left: 1rem; }
+        .ql-snow .ql-editor a { color: var(--primary); }
+    </style>
 </head>
 <body>
     <div class="app-shell">
@@ -92,8 +111,9 @@
                     </select>
                 </label>
                 <label>Contenido
-                    <textarea id="art-content" required minlength="20" rows="10" data-testid="submit-content-input" placeholder="Escribe aquí tu artículo completo…"></textarea>
+                    <div id="editor-container" data-testid="submit-content-editor"></div>
                 </label>
+                <textarea id="art-content" style="display:none;" data-testid="submit-content-input"></textarea>
                 <div class="modal-actions">
                     <button type="button" class="btn-ghost" id="cancel-submit-btn">Cancelar</button>
                     <button type="submit" class="btn-primary" id="submit-article-btn" data-testid="submit-article-submit-btn">Enviar a revisión</button>
@@ -102,6 +122,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
     <script src="/utils/api.js"></script>
     <script src="/utils/auth.js"></script>
     <script>
@@ -219,7 +240,32 @@
             const modal = document.getElementById('submit-modal');
             const form = document.getElementById('submit-form');
             const alertEl = document.getElementById('submit-alert');
-            const close = () => { modal.classList.remove('show'); alertEl.className = 'alert'; form.reset(); document.getElementById('edit-id').value = ''; document.getElementById('modal-title').textContent = 'Enviar nuevo artículo'; document.getElementById('submit-article-btn').textContent = 'Enviar a revisión'; };
+
+            // Init Quill editor
+            const quill = new Quill('#editor-container', {
+                theme: 'snow',
+                placeholder: 'Escribe aquí tu artículo completo…',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            const close = () => {
+                modal.classList.remove('show');
+                alertEl.className = 'alert';
+                form.reset();
+                quill.setContents([]);
+                document.getElementById('edit-id').value = '';
+                document.getElementById('modal-title').textContent = 'Enviar nuevo artículo';
+                document.getElementById('submit-article-btn').textContent = 'Enviar a revisión';
+            };
 
             document.getElementById('open-submit-btn').addEventListener('click', () => { close(); modal.classList.add('show'); });
             document.getElementById('modal-close-btn').addEventListener('click', close);
@@ -233,7 +279,10 @@
                     document.getElementById('art-title').value = a.title;
                     document.getElementById('art-description').value = a.description || '';
                     document.getElementById('art-category').value = a.category || 'General';
-                    document.getElementById('art-content').value = a.content || '';
+                    // Si el contenido tiene HTML (guardado antes por Quill), cargarlo como HTML; si no, texto plano
+                    const content = a.content || '';
+                    if (/<[a-z][\s\S]*>/i.test(content)) quill.root.innerHTML = content;
+                    else quill.setText(content);
                     document.getElementById('modal-title').textContent = 'Editar artículo';
                     document.getElementById('submit-article-btn').textContent = 'Reenviar a revisión';
                     modal.classList.add('show');
@@ -244,11 +293,19 @@
                 e.preventDefault();
                 alertEl.className = 'alert';
                 const editId = document.getElementById('edit-id').value;
+                // Extraer HTML del editor (y validar mínimo de contenido en texto plano)
+                const plainText = quill.getText().trim();
+                if (plainText.length < 20) {
+                    alertEl.className = 'alert alert-error show';
+                    alertEl.textContent = 'El contenido debe tener al menos 20 caracteres.';
+                    return;
+                }
+                const contentHtml = quill.root.innerHTML;
                 const data = {
                     title: document.getElementById('art-title').value.trim(),
                     description: document.getElementById('art-description').value.trim(),
                     category: document.getElementById('art-category').value,
-                    content: document.getElementById('art-content').value.trim()
+                    content: contentHtml
                 };
                 const btn = document.getElementById('submit-article-btn');
                 btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Guardando…';

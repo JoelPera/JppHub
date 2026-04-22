@@ -34,6 +34,17 @@ export class ArticleController {
         } catch (error) { next(error); }
     }
 
+    // Público por slug - solo si está aprobado
+    static async getArticleBySlug(req, res, next) {
+        try {
+            const article = await ArticleService.getArticleBySlug(req.params.slug);
+            if (!article || article.status !== 'approved') {
+                return res.status(404).json({ status: 'error', message: 'Artículo no encontrado' });
+            }
+            res.json({ status: 'success', data: article });
+        } catch (error) { next(error); }
+    }
+
     // POST /api/articles - Usuario autenticado envía a revisión
     static async submitArticle(req, res, next) {
         try {

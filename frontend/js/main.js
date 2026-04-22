@@ -12,15 +12,17 @@
                 return;
             }
             grid.innerHTML = articles.slice(0, 6).map(a => `
-                <article class="card" data-testid="article-card-${a.id}">
-                    <h3>${escapeHtml(a.title)}</h3>
-                    <p>${escapeHtml(a.description || '').slice(0, 160)}</p>
-                    <div style="margin-top:1rem; display:flex; gap:.6rem; align-items:center; color: var(--text-subtle); font-size:.82rem;">
-                        <span class="badge badge-approved">${escapeHtml(a.category || 'General')}</span>
-                        <span>${fmtDate(a.publishedAt || a.createdAt)}</span>
-                        <span>· ${a.views || 0} vistas</span>
-                    </div>
-                </article>
+                <a href="/articles/${encodeURIComponent(a.slug)}" style="text-decoration:none;">
+                    <article class="card" data-testid="article-card-${a.id}">
+                        <h3>${escapeHtml(a.title)}</h3>
+                        <p>${escapeHtml(a.description || '').slice(0, 160)}</p>
+                        <div style="margin-top:1rem; display:flex; gap:.6rem; align-items:center; color: var(--text-subtle); font-size:.82rem;">
+                            <span class="badge badge-approved">${escapeHtml(a.category || 'General')}</span>
+                            <span>${fmtDate(a.publishedAt || a.createdAt)}</span>
+                            <span>· ${a.views || 0} vistas</span>
+                        </div>
+                    </article>
+                </a>
             `).join('');
         } catch (e) {
             grid.innerHTML = `<div class="card"><p>No se pudieron cargar los artículos: ${escapeHtml(e.message)}</p></div>`;

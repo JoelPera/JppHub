@@ -48,6 +48,7 @@ class ApiClient {
     async getAllArticles(status) { const q = status ? `?status=${status}` : ''; return (await this.request(`/articles/all${q}`)).data || []; }
     async getMyArticles() { return (await this.request('/articles/mine')).data || []; }
     async getArticle(id) { return (await this.request(`/articles/${id}`)).data; }
+    async getArticleBySlug(slug) { return (await this.request(`/articles/slug/${encodeURIComponent(slug)}`)).data; }
     async submitArticle(data) { return (await this.request('/articles', { method: 'POST', body: JSON.stringify(data) })).data; }
     async updateArticle(id, data) { return (await this.request(`/articles/${id}`, { method: 'PUT', body: JSON.stringify(data) })).data; }
     async reviewArticle(id, action, note) { return (await this.request(`/articles/${id}/review`, { method: 'POST', body: JSON.stringify({ action, note: note || '' }) })).data; }

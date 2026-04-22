@@ -14,6 +14,7 @@ app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'pages', 'logi
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'pages', 'register.html')));
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'pages', 'dashboard.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'pages', 'admin.html')));
+app.get('/articles/:slug', (req, res) => res.sendFile(path.join(__dirname, 'articles', 'article.html')));
 
 // Fallback a index.html
 app.get('*', (req, res) => {

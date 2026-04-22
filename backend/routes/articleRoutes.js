@@ -11,6 +11,9 @@ import {
 
 const router = express.Router();
 
+// Detalle por slug (público, solo si está aprobado)
+router.get('/slug/:slug', ArticleController.getArticleBySlug);
+
 // Público (solo aprobados)
 router.get('/', ArticleController.getPublishedArticles);
 
