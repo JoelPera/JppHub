@@ -1,190 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!doctype html>
+<html lang="es" class="h-full">
+  <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0A0A'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='62' font-weight='700' text-anchor='middle' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="JppHub - La plataforma SaaS donde autores publican contenido sobre IA y automatización revisado por expertos." />
-    <title>JppHub - IA y Automatización de verdad</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css" />
-</head>
-<body>
-    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <meta name="description" content="JppHub — La plataforma editorial SaaS donde expertos publican sobre IA y automatización. Contenido curado, publicado al instante." />
+    <meta name="theme-color" content="#0A0A0A" />
+    <title>JppHub · Editorial SaaS sobre IA y Automatización</title>
 
-    <header class="navbar">
-        <a href="/" class="logo" data-testid="nav-logo">JppHub</a>
-        <nav aria-label="Navegación principal">
-            <ul>
-                <li><a href="#features">Producto</a></li>
-                <li><a href="#blog">Artículos</a></li>
-                <li><a href="#pricing">Planes</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons" id="authButtons">
-            <a href="/login" class="login-btn" data-testid="nav-login-btn">Ingresar</a>
-            <a href="/register" class="register-btn" data-testid="nav-register-btn">Empezar gratis</a>
-        </div>
-    </header>
+    <!-- Cabinet Grotesk + Satoshi (Fontshare) -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700,900&display=swap" />
+    <!-- Instrument Serif (Google) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" />
 
-    <main id="main">
-        <section class="hero">
-            <span class="eyebrow">Curado por expertos · Publicado al instante</span>
-            <h1>La plataforma donde los mejores artículos<br><span class="accent">sobre IA y automatización</span><br>se publican.</h1>
-            <p class="hero-subtitle">JppHub es un SaaS editorial. Envía tu artículo, nuestro equipo lo revisa, y si es aprobado aparece publicado para miles de lectores.</p>
-            <div class="hero-actions">
-                <a href="/register" class="btn-primary btn-lg" data-testid="hero-cta-register">Crear cuenta gratis →</a>
-                <a href="#features" class="btn-secondary btn-lg" data-testid="hero-cta-features">Ver cómo funciona</a>
-            </div>
-            <div class="hero-stats" role="list">
-                <div role="listitem">
-                    <span class="hero-stat-num" data-testid="stat-authors">250+</span>
-                    <span class="hero-stat-label">Autores activos</span>
-                </div>
-                <div role="listitem">
-                    <span class="hero-stat-num" data-testid="stat-articles">1.2k</span>
-                    <span class="hero-stat-label">Artículos publicados</span>
-                </div>
-                <div role="listitem">
-                    <span class="hero-stat-num" data-testid="stat-rate">&lt;24h</span>
-                    <span class="hero-stat-label">Tiempo de revisión</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="section">
-            <div class="section-header">
-                <h2>Todo lo que necesitas para publicar</h2>
-                <p>Un flujo editorial SaaS completo: envío, revisión, feedback y publicación automática.</p>
-            </div>
-            <div class="grid">
-                <article class="card" data-testid="feature-submit">
-                    <div class="card-icon">✎</div>
-                    <h3>Editor sencillo</h3>
-                    <p>Escribe tu artículo con título, descripción, categoría y contenido enriquecido desde el dashboard.</p>
-                </article>
-                <article class="card" data-testid="feature-review">
-                    <div class="card-icon">✓</div>
-                    <h3>Revisión experta</h3>
-                    <p>Nuestro equipo revisa tu artículo en menos de 24h y te devuelve aprobación, rechazo o notas de revisión.</p>
-                </article>
-                <article class="card" data-testid="feature-publish">
-                    <div class="card-icon">⚡</div>
-                    <h3>Publicación instantánea</h3>
-                    <p>Una vez aprobado, tu artículo se publica automáticamente en la home y es indexado para SEO.</p>
-                </article>
-                <article class="card" data-testid="feature-analytics">
-                    <div class="card-icon">📊</div>
-                    <h3>Estadísticas claras</h3>
-                    <p>Visualiza cuántas vistas acumulan tus artículos y mide el impacto de cada publicación.</p>
-                </article>
-                <article class="card" data-testid="feature-roles">
-                    <div class="card-icon">🔐</div>
-                    <h3>Roles y permisos</h3>
-                    <p>Autores, revisores y administradores con permisos específicos. Todo seguro por defecto.</p>
-                </article>
-                <article class="card" data-testid="feature-api">
-                    <div class="card-icon">&#8962;</div>
-                    <h3>Dashboard profesional</h3>
-                    <p>Un panel de administración real con cola de revisión, filtros por estado y acciones en un clic.</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="blog" class="section">
-            <div class="section-header">
-                <h2>Últimos artículos aprobados</h2>
-                <p>Contenido validado por nuestro equipo editorial.</p>
-            </div>
-            <div class="grid" id="articles-grid" data-testid="articles-grid">
-                <div class="card"><p>Cargando artículos…</p></div>
-            </div>
-        </section>
-
-        <section class="section dark">
-            <div class="inner">
-                <div class="section-header">
-                    <h2>¿Por qué un SaaS editorial?</h2>
-                    <p>Porque la calidad importa más que el volumen. Tú escribes, nosotros validamos.</p>
-                </div>
-                <ul class="feature-list">
-                    <li>Filtro editorial: solo contenido útil y revisado llega a la web.</li>
-                    <li>Feedback claro: si rechazamos, explicamos por qué; si pedimos cambios, lo vuelves a enviar.</li>
-                    <li>Audiencia cualificada: tus artículos llegan a lectores interesados en IA y automatización.</li>
-                    <li>Control total: desde tu dashboard ves el estado de cada artículo en tiempo real.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="pricing" class="section">
-            <div class="section-header">
-                <h2>Planes simples</h2>
-                <p>Empieza gratis. Escala cuando quieras más.</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card" data-testid="plan-free">
-                    <span class="pricing-name">Free</span>
-                    <div class="pricing-price">$0 <small>/ mes</small></div>
-                    <ul class="pricing-features">
-                        <li>Hasta 3 artículos al mes</li>
-                        <li>Dashboard personal</li>
-                        <li>Revisión estándar (48h)</li>
-                    </ul>
-                    <a href="/register" class="btn-secondary">Empezar gratis</a>
-                </div>
-                <div class="pricing-card featured" data-testid="plan-pro">
-                    <span class="pricing-name">Pro</span>
-                    <div class="pricing-price">$19 <small>/ mes</small></div>
-                    <ul class="pricing-features">
-                        <li>Artículos ilimitados</li>
-                        <li>Revisión prioritaria (12h)</li>
-                        <li>Estadísticas avanzadas</li>
-                        <li>Soporte por email</li>
-                    </ul>
-                    <a href="/register" class="btn-primary">Empezar Pro</a>
-                </div>
-                <div class="pricing-card" data-testid="plan-enterprise">
-                    <span class="pricing-name">Enterprise</span>
-                    <div class="pricing-price">Custom</div>
-                    <ul class="pricing-features">
-                        <li>Múltiples autores</li>
-                        <li>SLA dedicado</li>
-                        <li>Integraciones a medida</li>
-                    </ul>
-                    <a href="#contacto" class="btn-secondary">Hablemos</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacto" class="section">
-            <div class="section-header">
-                <h2>Contacto</h2>
-                <p>¿Dudas, feedback o propuestas? Escríbenos.</p>
-            </div>
-            <form id="contactForm" data-testid="contact-form">
-                <label>Nombre
-                    <input type="text" id="contact-name" name="name" placeholder="Tu nombre" required data-testid="contact-name-input">
-                </label>
-                <label>Correo electrónico
-                    <input type="email" id="contact-email" name="email" placeholder="tu@email.com" required data-testid="contact-email-input">
-                </label>
-                <label>Mensaje
-                    <textarea id="contact-message" name="message" rows="5" placeholder="Cuéntanos..." required data-testid="contact-message-input"></textarea>
-                </label>
-                <button type="submit" data-testid="contact-submit-btn">Enviar mensaje</button>
-                <div id="contact-alert" class="alert"></div>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2026 JppHub · Construido con pasión por IA y automatización</p>
-    </footer>
-
-    <script src="/utils/api.js"></script>
-    <script src="/utils/auth.js"></script>
-    <script src="/js/main.js"></script>
-</body>
+    <script>
+      (function () {
+        try {
+          const t = localStorage.getItem('jpphub_theme');
+          const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (t === 'dark' || (!t && prefers)) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="h-full bg-white dark:bg-ink-950 text-ink-900 dark:text-ink-50 antialiased font-satoshi">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

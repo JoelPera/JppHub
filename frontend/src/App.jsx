@@ -1,49 +1,56 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Admin from './pages/Admin';
-import Posts from './pages/Posts';
-import PostDetail from './pages/PostDetail';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import Landing from './pages/Landing'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Articles from './pages/Articles'
+import ArticleDetail from './pages/ArticleDetail'
+import Dashboard from './pages/Dashboard'
+import Admin from './pages/Admin'
+import NotFound from './pages/NotFound'
+import { useAuth } from './contexts/AuthContext'
 
-function AppContent() {
-    const { user, loading } = useAuth();
-
-    if (loading) return <div>Loading...</div>;
-
-    return (
-        <Router>
-            <div className="min-h-screen bg-gray-900 text-white">
-                <Navbar />
-                <div className="flex">
-                    {user && <Sidebar />}
-                    <main className={`flex-1 p-6 ${user ? '' : 'ml-0'}`}>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
-                            <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
-                            <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-                            <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" />} />
-                            <Route path="/posts" element={<Posts />} />
-                            <Route path="/posts/:id" element={<PostDetail />} />
-                        </Routes>
-                    </main>
-                </div>
-            </div>
-        </Router>
-    );
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1))
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname, hash])
+  return null
 }
 
-function App() {
+function RequireAuth({ children, adminOnly = false }) {
+  const { user, loading, isAdmin } = useAuth()
+  const loc = useLocation()
+  if (loading) {
     return (
-        <AuthProvider>
-            <AppContent />
-        </AuthProvider>
-    );
+      <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-ink-950">
+        <div className="w-10 h-10 border-2 border-ink-900 dark:border-white border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+  if (!user) return <Navigate to="/login" replace state={{ from: loc.pathname }} />
+  if (adminOnly && !isAdmin) return <Navigate to="/dashboard" replace />
+  return children
 }
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/articulos" element={<Articles />} />
+        <Route path="/articulos/:slug" element={<ArticleDetail />} />
+        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+        <Route path="/admin" element={<RequireAuth adminOnly><Admin /></RequireAuth>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  )
+}
