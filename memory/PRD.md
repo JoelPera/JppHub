@@ -1,79 +1,78 @@
 # JppHub - Product Requirements Document
 
 ## Original Problem Statement
-"Quiero que las funciones de registrar usuarios y el login dentro de la web funcionen a la perfección, quiero que hagas que la web se vea mucho más profesional y hagas un SaaS, y panel Dashboard para aceptar o rechazar o poner otra vez en revisión los artículos para subirlos, cambia lo que necesites del index.html y del css para que se vea mucho más profesional"
+"Mira aqui, quiero que me hagas la web mucho mas profesional, toca solo frontend ya que el backend x fin lo tengo funcionando, obiamente haz la conexion frontend backend para que funccione, puedes ver todos los archivos de la web desde el repositorio de github"
 
-## Tech Stack
-- **Backend**: Node.js 20 + Express 4 (puerto 8001)
-- **Base de datos**: MariaDB/MySQL 10.11 (compatible con MySQL 8+ en VPS del cliente)
-- **Frontend**: HTML/CSS/JS vanilla servido por micro-server Express (puerto 3000)
-- **Editor**: Quill 1.3.7 (CDN) WYSIWYG
-- **Auth**: JWT email/password + Emergent-managed Google OAuth
+Usuario pidió en rondas anteriores: rediseño visual profesional, SaaS claro moderno tipo Stripe/Notion, todas las páginas (landing, login, register, dashboard, admin, article detail), añadir búsqueda, filtros por categoría, toggle modo oscuro/claro, landing con testimonios/logos/dashboard demo/animaciones.
+
+## Tech Stack (actualizado v2 — Iteración 3, Abr 2026)
+- **Backend (sin tocar lógica, solo fixes menores)**: Node.js 20 + Express 4 + MariaDB 10.11
+- **Backend wrapper**: `/app/backend/server.py` (FastAPI ASGI) — necesario porque supervisor está hardcodeado a uvicorn. Spawnea `node server.js` en 127.0.0.1:8002 y proxy transparente de todas las peticiones HTTP
+- **Frontend (REESCRITO COMPLETO)**: React 18 + Vite 5 + TailwindCSS 3 + Framer Motion + React Router 6 + React Quill + Lucide React + React Hot Toast
+- **Tipografía**: Cabinet Grotesk (headings), Satoshi (UI body), Instrument Serif (articles/editorial)
+- **Paleta**: Swiss high-contrast B&W con azul `#2563EB` como acento. Full light + dark mode
+- **Autenticación**: JWT (LocalStorage `jpphub_token` + `jpphub_user`)
 
 ## User Personas
-1. **Visitante**: lee artículos aprobados en la home + detalle completo en `/articles/:slug`.
-2. **Autor (rol `user`)**: se registra, envía artículos con editor WYSIWYG, ve su dashboard con estado por artículo, edita (vuelve a `pending`).
-3. **Admin (rol `admin`)**: accede al panel `/admin`, cola de revisión, aprueba / rechaza / vuelve a revisión con nota, gestiona usuarios y roles.
+1. **Visitante**: navega landing, lista `/articulos` con búsqueda/filtros/sort, lee detalle `/articulos/:slug`.
+2. **Autor (`author`)**: dashboard con stats + lista "mis artículos" + modal Quill para crear/editar. Envía → estado `pending` → tras revisión pasa a `approved`/`rejected`/`in_review`.
+3. **Admin (`admin`)**: panel `/admin` con 4 stats, 3 tabs (Cola, Artículos, Usuarios), acciones Aprobar/Pedir cambios/Rechazar con nota obligatoria, gestión de roles.
 
-## Core Requirements (DONE)
-- ✅ Registro y login (JWT + Google OAuth)
-- ✅ Diseño profesional SaaS con paleta teal/azul
-- ✅ Dashboard admin con accept/reject/review articles
-- ✅ Solo artículos aprobados aparecen públicos
+## Core Requirements — DONE ✅
+- Registro + login (email/password) con redirecciones correctas
+- Theme toggle light/dark persistido en localStorage
+- Landing completa: hero + marquee de logos + demo dashboard + features bento + últimos artículos + testimonios + pricing + FAQ + contacto
+- Public Articles listing con search, filtros por categoría, sort (recent/views), paginación visual
+- Article detail con typography editorial (Instrument Serif), auto-increment de vistas, share (clipboard/native)
+- User Dashboard con stats, filtros por estado, editor Quill WYSIWYG en modal
+- Admin Panel con Queue/Articles/Users tabs, review modal con 3 acciones + nota, role management
+- Contact form conectado a `/api/contact`
+- Protected routes + RBAC (autor no puede entrar a `/admin`)
+- 404 page, toasts para todos los feedback, animaciones Framer Motion con staggered reveals
 
-## What's been implemented
+## Testing Status (Iteración 3, Abr 2026)
+- **Backend**: 20/20 pytest green (incluye 3 nuevos para /api/contact + PATCH views)
+- **Frontend Playwright**: 100% flujos críticos — login admin+autor, dashboard, admin panel (3 tabs), logout, protected redirect, public listing con search/filtros/sort, article detail, landing con contact form, register, 404, theme toggle persistente, RBAC admin
+- **0 issues** críticos, menores, UI bugs, integration issues, ni design issues
 
-### Iteración 1 (Abr 2026)
-**Backend**
-- MariaDB + schema con tablas users, posts (con flujo `pending`/`in_review`/`approved`/`rejected`/`draft`), categories, sessions, activity_logs, contact_messages
-- Fix bugs: `authorize` export, `sessionRepository`, `userRepository.findAll`
-- Endpoints articles completos + review + admin stats + users + role management
-- Google OAuth endpoint `/api/auth/google/session`
-- Seed idempotente: admin + autor demo + 2 artículos
+## Fixes de backend aplicados en esta iteración
+1. `postRepository.js`: `u.username` → `u.name` (columna correcta en schema)
+2. `seed.js`: reescrito de 0 usando columnas reales (`name`, `password_hash`, `status`, `provider`) + idempotente + 4 posts demo con HTML estructurado
+3. Creado `/app/backend/server.py` (FastAPI proxy) para que supervisor (uvicorn) arranque Node backend
+4. MariaDB instalada + schema aplicado + seed ejecutado
 
-**Frontend**
-- CSS rediseñado: sistema de diseño SaaS (Sora + Manrope)
-- Landing, Login, Register, Dashboard usuario, Panel admin con 3 tabs
-- data-testid en elementos interactivos
-
-### Iteración 2 (Abr 2026) - P1 Features
-**Página de detalle `/articles/:slug`**
-- Endpoint `GET /api/articles/slug/:slug` (200 si approved, 404 si no)
-- Página pública con tipografía serif (Lora) para lectura, render HTML de Quill
-- Cards del home linkean al detalle, auto-incremento de vistas
-
-**Editor WYSIWYG (Quill)**
-- Toolbar: headings, bold/italic/underline/strike, blockquote, code, lists, link, clean
-- Tema oscuro custom matcheando la paleta
-- Carga HTML preexistente al editar
-- Content guardado como HTML, renderizado tal cual en detalle
-
-**Paginación admin**
-- Client-side, PAGE_SIZE=10
-- Tablas Artículos y Usuarios
-- Info "Página X de Y · N resultados" + botones Anterior/Siguiente
-- Cambiar filtro reinicia a página 1
-
-## Testing Results
-- Iter 1: 13/13 backend, 100% flujos frontend (2 issues UX menores → corregidos)
-- Iter 2: 17/17 backend, 100% frontend, **0 issues**
+## What's been implemented (cronología)
+### Iteración 1 (Abr 2026) — HTML/CSS/JS vanilla
+- Backend inicial + seed + CRUD artículos + admin panel
+### Iteración 2 (Abr 2026) — HTML/CSS/JS vanilla
+- Article detail page + Quill editor + pagination admin
+### Iteración 3 (Abr 2026) — React rewrite ← **ACTUAL**
+- Migración completa frontend a React + Vite + Tailwind
+- 7 páginas nuevas + 6 componentes + 2 contexts
+- Fix backend (seed + postRepository) + MariaDB setup + FastAPI wrapper
+- Testing 100% pass
 
 ## Prioritized Backlog
 
-### P2 (Next)
-- **Email notifications** (SendGrid/Resend) al aprobar/rechazar — mejora retención
-- Paginación server-side (cuando BD crezca a miles de artículos)
-- Page-size selector en admin
+### P1 (Next sprint)
+- **Email notifications** (Resend/SendGrid) al aprobar/rechazar → mejora retención de autores
+- Imagen de portada (cover_image) en artículos con upload a S3/Cloudinary
+- Editor perfil de autor con avatar + bio
 
-### P3 (Backlog)
-- Categorías dinámicas desde DB en modal de envío
-- Cover image upload (S3/Cloudinary)
+### P2
+- Categorías dinámicas desde DB (hoy hardcodeadas en Dashboard)
+- Paginación server-side en /articulos (cuando crezca a miles)
+- Analytics dashboard autor (gráficos de vistas por día)
 - Comentarios en artículos
 - Stripe subscriptions (schema ya existe)
-- Analytics dashboard para autores
 
-## Deployment a VPS
-- Schema en `/app/backend/database/schema.sql` → ejecutar en MySQL de producción
-- Cambiar credenciales en `backend/.env` (DB_HOST, DB_USER, DB_PASSWORD, JWT_SECRET)
-- `npm install` en backend, luego `node server.js` (o PM2/systemd)
-- nginx sirve frontend estático + reverse-proxy `/api` → puerto backend
+### P3
+- PWA / offline reading
+- RSS feed
+- Newsletter integration
+- Búsqueda full-text con Meilisearch
+
+## Deployment notes
+- El wrapper Python es necesario **solo en Emergent preview** porque supervisor es readonly. En VPS del cliente: ejecutar `node server.js` directamente y servir frontend con `yarn build` + nginx.
+- Variables de entorno: ver `/app/backend/.env` (MariaDB + JWT_SECRET).
+- Frontend en build de producción: `cd /app/frontend && yarn build` → sirve `/app/frontend/dist/` con nginx.

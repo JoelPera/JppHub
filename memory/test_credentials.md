@@ -11,7 +11,7 @@
 ### Autor demo
 - Email: `autor@jpphub.com`
 - Password: `Autor123!`
-- Role: `user`
+- Role: `author`
 - Puede: enviar artículos, ver sus artículos con estado.
 
 ## Base de datos (desarrollo local)
