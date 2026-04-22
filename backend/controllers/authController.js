@@ -1,4 +1,5 @@
 import AuthService from '../services/authService.js';
+import { userRepository } from '../repositories/userRepository.js';
 
 export class AuthController {
     static async register(req, res, next) {
@@ -31,11 +32,11 @@ export class AuthController {
         }
     }
 
-    static async me(req, res) {
-        res.json({
-            status: 'success',
-            data: req.user
-        });
+    static async me(req, res, next) {
+        try {
+            const user = await userRepository.findById(req.user.id);
+            res.json({ status: 'success', data: user || req.user });
+        } catch (err) { next(err); }
     }
 
     static async googleLogin(req, res, next) {

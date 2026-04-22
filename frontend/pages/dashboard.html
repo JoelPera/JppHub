@@ -166,6 +166,8 @@
         }
 
         async function loadMyArticles() {
+            const container = document.getElementById('articles-list');
+            container.innerHTML = '<p style="color:var(--text-muted);">Cargando tus artículos…</p>';
             try {
                 const arts = await api.getMyArticles();
                 const counts = arts.reduce((acc, a) => { acc.total++; acc[a.status] = (acc[a.status]||0)+1; return acc; }, { total: 0 });
@@ -173,9 +175,9 @@
                 document.getElementById('stat-pending').textContent = (counts.pending||0) + (counts.in_review||0);
                 document.getElementById('stat-approved').textContent = counts.approved || 0;
                 document.getElementById('stat-rejected').textContent = counts.rejected || 0;
-                renderList(arts);
+                renderList(arts || []);
             } catch (err) {
-                document.getElementById('articles-list').innerHTML =
+                container.innerHTML =
                     `<p style="color: var(--danger);">Error: ${esc(err.message)}</p>`;
             }
         }
