@@ -16,7 +16,7 @@ const SELECT_FIELDS = `
     p.category, p.author, p.author_id AS authorId, p.views, p.status,
     p.review_note AS reviewNote, p.reviewed_by AS reviewedBy, p.reviewed_at AS reviewedAt,
     p.published_at AS publishedAt, p.created_at AS createdAt, p.updated_at AS updatedAt,
-    u.username AS authorName, u.email AS authorEmail
+    u.name AS authorName, u.email AS authorEmail
 `;
 
 export const postRepository = {
