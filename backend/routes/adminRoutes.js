@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.use(authenticate, authorize('admin'));
 router.get('/users', adminController.getUsers);
-router.get('/subscriptions', adminController.getSubscriptions);
-router.get('/payments', adminController.getPayments);
+router.patch('/users/:id/role', adminController.updateUserRole);
 router.get('/activity', adminController.getActivityLogs);
+router.get('/stats', adminController.getDashboardStats);
 
 export default router;

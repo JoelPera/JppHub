@@ -1,143 +1,46 @@
-// frontend/utils/auth.js
-
+// JppHub - Auth manager
 class AuthManager {
     constructor() {
-        this.user = null;
-        this.isAuthenticated = false;
-        this.init();
+        this.user = this.loadUser();
+        this.isAuthenticated = !!api.getToken();
     }
-
-    init() {
-        const token = api.getToken();
-        if (token) {
-            this.isAuthenticated = true;
-            this.decodeUserFromToken(token);
-        }
+    loadUser() {
+        const raw = localStorage.getItem('jpphub_user');
+        try { return raw ? JSON.parse(raw) : null; } catch { return null; }
     }
-
-    getToken() {
-        return api.getToken();
+    setUser(u) {
+        this.user = u;
+        localStorage.setItem('jpphub_user', JSON.stringify(u));
     }
-
-    setToken(token) {
-        api.setToken(token);
-    }
-
-    removeToken() {
-        api.removeToken();
-    }
-
+    getUser() { return this.user || this.loadUser(); }
     async login(email, password) {
-        const response = await api.login(email, password);
-        if (response.token) {
-            this.setToken(response.token);
-        }
-        if (response.user) {
-            this.setUser(response.user);
-        }
+        const r = await api.login(email, password);
+        if (r.user) this.setUser(r.user);
         this.isAuthenticated = true;
-        return response;
+        return r;
     }
-
-    async register(userData) {
-        const response = await api.register(userData);
-        if (response.token) {
-            this.setToken(response.token);
-        }
-        if (response.user) {
-            this.setUser(response.user);
-        }
+    async register(data) {
+        const r = await api.register(data);
+        if (r.user) this.setUser(r.user);
         this.isAuthenticated = true;
-        return response;
+        return r;
     }
-
     logout() {
-        this.removeToken();
+        api.removeToken();
         localStorage.removeItem('jpphub_user');
-        this.user = null;
-        this.isAuthenticated = false;
-        window.location.href = this.getAppUrl('index.html');
+        this.user = null; this.isAuthenticated = false;
+        window.location.href = '/';
     }
-
-    setUser(user) {
-        this.user = user;
-        localStorage.setItem('jpphub_user', JSON.stringify(user));
-    }
-
-    getUser() {
-        if (!this.user) {
-            const stored = localStorage.getItem('jpphub_user');
-            if (stored) {
-                this.user = JSON.parse(stored);
-            }
-        }
-        return this.user;
-    }
-
-    decodeUserFromToken(token) {
-        try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            this.user = payload.user || payload;
-        } catch (error) {
-            console.error('Error decoding token:', error);
-            this.logout();
-        }
-    }
-
-    isAdmin() {
-        const user = this.getUser();
-        return user && user.role === 'admin';
-    }
-
-    isPremium() {
-        const user = this.getUser();
-        return user && (user.role === 'admin' || user.subscription_status === 'premium');
-    }
-
-    getBasePath() {
-        const { origin, pathname } = window.location;
-        let base = pathname;
-        const pagesIndex = pathname.indexOf('/pages');
-
-        if (pagesIndex !== -1) {
-            base = pathname.substring(0, pagesIndex);
-        } else {
-            base = pathname.replace(/\/[^\/]*$/, '/');
-        }
-
-        if (!base.endsWith('/')) {
-            base += '/';
-        }
-
-        return `${origin}${base}`;
-    }
-
-    getAppUrl(path) {
-        return `${this.getBasePath()}${path}`;
-    }
-
-    requiresAuth() {
-        const currentPath = window.location.pathname;
-        return currentPath.endsWith('/dashboard.html') || currentPath.endsWith('/admin.html');
-    }
-
-    checkAuth() {
-        if (this.requiresAuth() && !this.isAuthenticated) {
-            window.location.href = this.getAppUrl('pages/login.html');
-            return false;
-        }
+    isAdmin() { const u = this.getUser(); return u?.role === 'admin'; }
+    requireAuth() {
+        if (!this.isAuthenticated) { window.location.href = '/login'; return false; }
         return true;
     }
-
-    checkAdmin() {
-        if (!this.isAdmin()) {
-            window.location.href = this.getAppUrl('pages/dashboard.html');
-            return false;
-        }
+    requireAdmin() {
+        if (!this.requireAuth()) return false;
+        if (!this.isAdmin()) { window.location.href = '/dashboard'; return false; }
         return true;
     }
 }
-
 const auth = new AuthManager();
-window.AuthManager = AuthManager;
 window.auth = auth;

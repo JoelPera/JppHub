@@ -3,366 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - JppHub</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .dashboard-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-        }
-
-        .dashboard-header {
-            background: rgba(15, 23, 42, 0.95);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .dashboard-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .dashboard-nav h1 {
-            color: var(--text);
-            margin: 0;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn-secondary {
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface-hover);
-            border-color: var(--border-hover);
-        }
-
-        .btn-danger {
-            padding: 0.5rem 1rem;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .dashboard-main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-        }
-
-        .dashboard-sidebar {
-            background: var(--surface-strong);
-            border-radius: var(--radius-large);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .user-info {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-        }
-
-        .user-details h3 {
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .user-details p {
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-        }
-
-        .subscription-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .subscription-free {
-            background: rgba(156, 163, 175, 0.2);
-            color: #9ca3af;
-        }
-
-        .subscription-premium {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-
-        .subscription-admin {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .dashboard-content {
-            background: var(--surface-strong);
-            border-radius: var(--radius-large);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-header h2 {
-            color: var(--text);
-            margin: 0;
-        }
-
-        .articles-grid {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .article-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 1rem;
-            border: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-
-        .article-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .article-title {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .article-title:hover {
-            color: var(--primary);
-        }
-
-        .article-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .article-excerpt {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            padding: 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-nav {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .nav-actions {
-                justify-content: center;
-            }
-        }
-    </style>
+    <title>Dashboard · JppHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <header class="dashboard-header">
-            <nav class="dashboard-nav">
-                <h1>JppHub Dashboard</h1>
-                <div class="nav-actions">
-                    <a href="../index.html" class="btn-secondary">← Volver al sitio</a>
-                    <button id="logout-btn" class="btn-danger">Cerrar Sesión</button>
-                </div>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a href="/" class="logo brand" data-testid="dashboard-brand-link" style="font-size:1.25rem;">JppHub</a>
+            <nav>
+                <a href="/dashboard" class="active" data-testid="dashboard-nav-home">◇ Inicio</a>
+                <a href="#submit" data-testid="dashboard-nav-submit">✎ Enviar artículo</a>
+                <a href="#my-articles" data-testid="dashboard-nav-articles">≡ Mis artículos</a>
+                <a href="/" data-testid="dashboard-nav-site">↗ Ver sitio</a>
+                <a href="#" id="admin-nav-link" style="display:none" data-testid="dashboard-nav-admin">⚙ Panel admin</a>
             </nav>
-        </header>
-
-        <main class="dashboard-main">
-            <div class="dashboard-grid">
-                <aside class="dashboard-sidebar">
-                    <div id="user-info" class="user-info">
-                        <div class="loading">Cargando...</div>
-                    </div>
-                </aside>
-
-                <section class="dashboard-content">
-                    <div class="section-header">
-                        <h2>Últimos Artículos</h2>
-                    </div>
-
-                    <div id="articles-container">
-                        <div class="loading">Cargando artículos...</div>
-                    </div>
-                </section>
+            <div class="sidebar-user">
+                <div class="avatar" id="user-avatar" data-testid="dashboard-user-avatar">?</div>
+                <div>
+                    <div id="user-name" style="color: var(--text);" data-testid="dashboard-user-name">—</div>
+                    <button class="btn-ghost btn-sm" onclick="auth.logout()" style="padding:0; color: var(--text-muted);" data-testid="dashboard-logout-btn">Cerrar sesión</button>
+                </div>
             </div>
+        </aside>
+
+        <main class="app-main">
+            <div class="app-header">
+                <div>
+                    <h1 data-testid="dashboard-title">Dashboard</h1>
+                    <p class="subtitle" id="welcome-msg">Cargando…</p>
+                </div>
+                <button class="btn-primary" id="open-submit-btn" data-testid="dashboard-new-article-btn">+ Nuevo artículo</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total enviados</div>
+                    <div class="stat-number" id="stat-total" data-testid="dashboard-stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pendientes</div>
+                    <div class="stat-number" id="stat-pending" data-testid="dashboard-stat-pending" style="color: var(--warn);">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Aprobados</div>
+                    <div class="stat-number" id="stat-approved" data-testid="dashboard-stat-approved" style="color: var(--success);">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Rechazados</div>
+                    <div class="stat-number" id="stat-rejected" data-testid="dashboard-stat-rejected" style="color: var(--danger);">0</div>
+                </div>
+            </div>
+
+            <section class="panel" id="my-articles">
+                <div class="panel-header">
+                    <h2>Mis artículos</h2>
+                </div>
+                <div id="articles-list" data-testid="dashboard-articles-list">
+                    <p style="color:var(--text-muted);">Cargando…</p>
+                </div>
+            </section>
         </main>
     </div>
 
-    <script src="../utils/api.js"></script>
-    <script src="../utils/auth.js"></script>
+    <!-- Submit/Edit Modal -->
+    <div class="modal-overlay" id="submit-modal">
+        <div class="modal">
+            <button class="modal-close" type="button" id="modal-close-btn" aria-label="Cerrar">×</button>
+            <h2 id="modal-title">Enviar nuevo artículo</h2>
+            <div id="submit-alert" class="alert"></div>
+            <form id="submit-form" data-testid="submit-article-form">
+                <input type="hidden" id="edit-id">
+                <label>Título
+                    <input type="text" id="art-title" required minlength="5" maxlength="255" data-testid="submit-title-input">
+                </label>
+                <label>Descripción corta (resumen)
+                    <textarea id="art-description" required minlength="10" maxlength="1000" rows="2" data-testid="submit-description-input"></textarea>
+                </label>
+                <label>Categoría
+                    <select id="art-category" data-testid="submit-category-select">
+                        <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                        <option value="Automatización">Automatización</option>
+                        <option value="Desarrollo">Desarrollo</option>
+                        <option value="Productividad">Productividad</option>
+                        <option value="General">General</option>
+                    </select>
+                </label>
+                <label>Contenido
+                    <textarea id="art-content" required minlength="20" rows="10" data-testid="submit-content-input" placeholder="Escribe aquí tu artículo completo…"></textarea>
+                </label>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" id="cancel-submit-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="submit-article-btn" data-testid="submit-article-submit-btn">Enviar a revisión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/utils/api.js"></script>
+    <script src="/utils/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication
-            if (!auth.checkAuth()) return;
+    (function () {
+        // Handle Google OAuth redirect with #session_id
+        async function processGoogleSessionIfAny() {
+            if (window.location.hash && window.location.hash.includes('session_id=')) {
+                const match = window.location.hash.match(/session_id=([^&]+)/);
+                if (match) {
+                    try {
+                        const res = await fetch(`${window.location.origin}/api/auth/google/session`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ session_id: match[1] })
+                        });
+                        const json = await res.json();
+                        if (res.ok && json?.data?.token) {
+                            localStorage.setItem('jpphub_token', json.data.token);
+                            localStorage.setItem('jpphub_user', JSON.stringify(json.data.user));
+                            window.history.replaceState(null, '', '/dashboard');
+                            window.location.reload();
+                            return true;
+                        }
+                    } catch (e) { console.error('google session failed', e); }
+                }
+            }
+            return false;
+        }
 
-            loadUserInfo();
-            loadArticles();
+        function fmtDate(s) { try { return new Date(s).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }); } catch { return ''; } }
+        function esc(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
 
-            // Logout handler
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                auth.logout();
+        const statusLabel = {
+            pending: 'Pendiente', in_review: 'En revisión', approved: 'Aprobado',
+            rejected: 'Rechazado', draft: 'Borrador'
+        };
+
+        async function init() {
+            const processed = await processGoogleSessionIfAny();
+            if (processed) return;
+
+            if (!auth.requireAuth()) return;
+            try {
+                const me = await api.me();
+                auth.setUser(me);
+            } catch (e) { auth.logout(); return; }
+
+            renderUserInfo();
+            await loadMyArticles();
+            wireModal();
+        }
+
+        function renderUserInfo() {
+            const u = auth.getUser() || {};
+            document.getElementById('user-name').textContent = u.name || 'Usuario';
+            document.getElementById('user-avatar').textContent = (u.name || 'U').slice(0,1).toUpperCase();
+            document.getElementById('welcome-msg').textContent = `Hola, ${u.name || 'Usuario'}. Aquí tus envíos y estadísticas.`;
+            if (u.role === 'admin') {
+                const a = document.getElementById('admin-nav-link');
+                a.href = '/admin'; a.style.display = 'flex';
+            }
+        }
+
+        async function loadMyArticles() {
+            try {
+                const arts = await api.getMyArticles();
+                const counts = arts.reduce((acc, a) => { acc.total++; acc[a.status] = (acc[a.status]||0)+1; return acc; }, { total: 0 });
+                document.getElementById('stat-total').textContent = counts.total;
+                document.getElementById('stat-pending').textContent = (counts.pending||0) + (counts.in_review||0);
+                document.getElementById('stat-approved').textContent = counts.approved || 0;
+                document.getElementById('stat-rejected').textContent = counts.rejected || 0;
+                renderList(arts);
+            } catch (err) {
+                document.getElementById('articles-list').innerHTML =
+                    `<p style="color: var(--danger);">Error: ${esc(err.message)}</p>`;
+            }
+        }
+
+        function renderList(arts) {
+            const container = document.getElementById('articles-list');
+            if (!arts.length) {
+                container.innerHTML = `
+                    <div class="empty" data-testid="dashboard-empty-state">
+                        <div class="empty-icon">✎</div>
+                        <p>Aún no has enviado ningún artículo.<br>Comienza enviando tu primera contribución.</p>
+                        <button class="btn-primary" onclick="document.getElementById('open-submit-btn').click()" style="margin-top:1rem;">+ Crear artículo</button>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = `
+                <table class="data-table">
+                    <thead><tr>
+                        <th>Título</th><th>Categoría</th><th>Estado</th><th>Notas</th><th>Enviado</th><th>Acción</th>
+                    </tr></thead>
+                    <tbody>
+                        ${arts.map(a => `
+                            <tr data-testid="dashboard-article-row-${a.id}">
+                                <td><strong>${esc(a.title)}</strong><br><small style="color:var(--text-muted);">${esc(a.description).slice(0, 80)}…</small></td>
+                                <td><span class="badge badge-draft">${esc(a.category || '—')}</span></td>
+                                <td><span class="badge badge-${a.status}">${statusLabel[a.status] || a.status}</span></td>
+                                <td style="max-width:260px;">${a.reviewNote ? esc(a.reviewNote) : '<span style="color:var(--text-subtle);">—</span>'}</td>
+                                <td style="color:var(--text-muted);">${fmtDate(a.createdAt)}</td>
+                                <td>${(a.status === 'pending' || a.status === 'in_review' || a.status === 'rejected' || a.status === 'draft')
+                                    ? `<button class="btn-secondary btn-sm" onclick="window.openEdit('${a.id}')" data-testid="dashboard-edit-${a.id}">Editar</button>`
+                                    : '<span style="color:var(--text-subtle);">—</span>'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>`;
+        }
+
+        function wireModal() {
+            const modal = document.getElementById('submit-modal');
+            const form = document.getElementById('submit-form');
+            const alertEl = document.getElementById('submit-alert');
+            const close = () => { modal.classList.remove('show'); alertEl.className = 'alert'; form.reset(); document.getElementById('edit-id').value = ''; document.getElementById('modal-title').textContent = 'Enviar nuevo artículo'; document.getElementById('submit-article-btn').textContent = 'Enviar a revisión'; };
+
+            document.getElementById('open-submit-btn').addEventListener('click', () => { close(); modal.classList.add('show'); });
+            document.getElementById('modal-close-btn').addEventListener('click', close);
+            document.getElementById('cancel-submit-btn').addEventListener('click', close);
+            modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+            window.openEdit = async function(id) {
+                try {
+                    const a = await api.getArticle(id);
+                    document.getElementById('edit-id').value = a.id;
+                    document.getElementById('art-title').value = a.title;
+                    document.getElementById('art-description').value = a.description || '';
+                    document.getElementById('art-category').value = a.category || 'General';
+                    document.getElementById('art-content').value = a.content || '';
+                    document.getElementById('modal-title').textContent = 'Editar artículo';
+                    document.getElementById('submit-article-btn').textContent = 'Reenviar a revisión';
+                    modal.classList.add('show');
+                } catch (e) { alert('No se pudo cargar: ' + e.message); }
+            };
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertEl.className = 'alert';
+                const editId = document.getElementById('edit-id').value;
+                const data = {
+                    title: document.getElementById('art-title').value.trim(),
+                    description: document.getElementById('art-description').value.trim(),
+                    category: document.getElementById('art-category').value,
+                    content: document.getElementById('art-content').value.trim()
+                };
+                const btn = document.getElementById('submit-article-btn');
+                btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Guardando…';
+                try {
+                    if (editId) await api.updateArticle(editId, data);
+                    else await api.submitArticle(data);
+                    alertEl.className = 'alert alert-success show';
+                    alertEl.textContent = editId ? 'Artículo actualizado y reenviado.' : '¡Artículo enviado a revisión!';
+                    await loadMyArticles();
+                    setTimeout(close, 900);
+                } catch (err) {
+                    alertEl.className = 'alert alert-error show';
+                    alertEl.textContent = err.message;
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = editId ? 'Reenviar a revisión' : 'Enviar a revisión';
+                }
             });
-        });
-
-        async function loadUserInfo() {
-            try {
-                const user = auth.getUser();
-                const userInfo = document.getElementById('user-info');
-
-                if (user) {
-                    const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
-                    const initials = displayName.split(' ').map(part => part.charAt(0)).slice(0, 2).join('').toUpperCase() || 'US';
-                    const subscriptionClass = user.role === 'admin' ? 'subscription-admin' :
-                                           user.subscription_status === 'premium' ? 'subscription-premium' :
-                                           'subscription-free';
-
-                    const subscriptionText = user.role === 'admin' ? 'Admin' :
-                                           user.subscription_status === 'premium' ? 'Premium' :
-                                           'Free';
-
-                    userInfo.innerHTML = `
-                        <div class="user-avatar">${initials}</div>
-                        <div class="user-details">
-                            <h3>${displayName}</h3>
-                            <p>${user.email}</p>
-                            <span class="subscription-badge ${subscriptionClass}">${subscriptionText}</span>
-                        </div>
-                    `;
-                } else {
-                    // Try to fetch from API
-                    const userData = await api.getCurrentUser();
-                    auth.setUser(userData);
-                    loadUserInfo(); // Reload with new data
-                }
-            } catch (error) {
-                console.error('Error loading user info:', error);
-                document.getElementById('user-info').innerHTML = `
-                    <div class="error-message">
-                        Error al cargar información del usuario
-                    </div>
-                `;
-            }
         }
 
-        async function loadArticles() {
-            try {
-                const response = await api.getArticles({ limit: 10 });
-                const articles = response.articles || response;
-
-                const container = document.getElementById('articles-container');
-                container.innerHTML = '';
-
-                if (articles.length === 0) {
-                    container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No hay artículos disponibles</p>';
-                    return;
-                }
-
-                const articlesGrid = document.createElement('div');
-                articlesGrid.className = 'articles-grid';
-
-                articles.forEach(article => {
-                    const card = document.createElement('div');
-                    card.className = 'article-card';
-
-                    const publishDate = new Date(article.created_at).toLocaleDateString('es-ES');
-
-                    card.innerHTML = `
-                        <a href="../articles/article.html?id=${article.id}" class="article-title">${article.title}</a>
-                        <div class="article-meta">
-                            ${publishDate} • ${article.views || 0} vistas
-                        </div>
-                        <div class="article-excerpt">
-                            ${article.excerpt || article.content?.substring(0, 150) + '...' || 'Sin descripción disponible'}
-                        </div>
-                    `;
-
-                    articlesGrid.appendChild(card);
-                });
-
-                container.appendChild(articlesGrid);
-            } catch (error) {
-                console.error('Error loading articles:', error);
-                document.getElementById('articles-container').innerHTML = `
-                    <div class="error-message">
-                        Error al cargar artículos. Inténtalo de nuevo más tarde.
-                    </div>
-                `;
-            }
-        }
+        document.addEventListener('DOMContentLoaded', init);
+    })();
     </script>
 </body>
 </html>

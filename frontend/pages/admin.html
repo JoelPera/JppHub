@@ -3,524 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - JppHub</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .admin-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-        }
-
-        .admin-header {
-            background: rgba(15, 23, 42, 0.95);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .admin-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .admin-nav h1 {
-            color: var(--text);
-            margin: 0;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn-secondary {
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface-hover);
-            border-color: var(--border-hover);
-        }
-
-        .btn-danger {
-            padding: 0.5rem 1rem;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .admin-main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .tab-btn {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: var(--radius) var(--radius) 0 0;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            background: var(--surface-strong);
-            color: var(--text);
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .tab-content {
-            background: var(--surface-strong);
-            border-radius: var(--radius-large);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .data-table th {
-            background: var(--surface);
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .data-table tr:hover {
-            background: var(--surface-hover);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--radius);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-
-        .status-inactive {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .role-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: var(--radius);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .role-admin {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .role-user {
-            background: rgba(99, 102, 241, 0.2);
-            color: #6366f1;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            padding: 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--surface);
-            padding: 1rem;
-            border-radius: var(--radius);
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .admin-nav {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .nav-actions {
-                justify-content: center;
-            }
-
-            .admin-tabs {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
+    <title>Panel Admin · JppHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="admin-container">
-        <header class="admin-header">
-            <nav class="admin-nav">
-                <h1>Panel de Administración</h1>
-                <div class="nav-actions">
-                    <a href="dashboard.html" class="btn-secondary">← Dashboard Usuario</a>
-                    <button id="logout-btn" class="btn-danger">Cerrar Sesión</button>
-                </div>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a href="/" class="logo brand" data-testid="admin-brand-link" style="font-size:1.25rem;">JppHub</a>
+            <nav>
+                <a href="#overview" data-tab="overview" class="active tab-link" data-testid="admin-nav-overview">◇ Resumen</a>
+                <a href="#articles" data-tab="articles" class="tab-link" data-testid="admin-nav-articles">≡ Artículos</a>
+                <a href="#users" data-tab="users" class="tab-link" data-testid="admin-nav-users">⚇ Usuarios</a>
+                <a href="/dashboard" data-testid="admin-nav-dashboard">↘ Dashboard usuario</a>
+                <a href="/" data-testid="admin-nav-site">↗ Ver sitio</a>
             </nav>
-        </header>
-
-        <main class="admin-main">
-            <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="users">Usuarios</button>
-                <button class="tab-btn" data-tab="articles">Artículos</button>
-                <button class="tab-btn" data-tab="payments">Pagos</button>
-                <button class="tab-btn" data-tab="activity">Actividad</button>
-            </div>
-
-            <div class="tab-content">
-                <div id="users-tab" class="tab-pane">
-                    <div id="users-content">
-                        <div class="loading">Cargando usuarios...</div>
-                    </div>
-                </div>
-
-                <div id="articles-tab" class="tab-pane" style="display: none;">
-                    <div id="articles-content">
-                        <div class="loading">Cargando artículos...</div>
-                    </div>
-                </div>
-
-                <div id="payments-tab" class="tab-pane" style="display: none;">
-                    <div id="payments-content">
-                        <div class="loading">Cargando pagos...</div>
-                    </div>
-                </div>
-
-                <div id="activity-tab" class="tab-pane" style="display: none;">
-                    <div id="activity-content">
-                        <div class="loading">Cargando actividad...</div>
-                    </div>
+            <div class="sidebar-user">
+                <div class="avatar" id="user-avatar" data-testid="admin-user-avatar">?</div>
+                <div>
+                    <div id="user-name" style="color: var(--text);" data-testid="admin-user-name">—</div>
+                    <button class="btn-ghost btn-sm" onclick="auth.logout()" style="padding:0; color: var(--text-muted);" data-testid="admin-logout-btn">Cerrar sesión</button>
                 </div>
             </div>
+        </aside>
+
+        <main class="app-main">
+            <div class="app-header">
+                <div>
+                    <h1 data-testid="admin-title">Panel de Administración</h1>
+                    <p class="subtitle">Revisa, aprueba o rechaza artículos. Gestiona usuarios.</p>
+                </div>
+            </div>
+
+            <!-- Overview -->
+            <section id="tab-overview" class="tab-pane">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-label">Usuarios</div><div class="stat-number" id="ov-users" data-testid="admin-stat-users">0</div></div>
+                    <div class="stat-card"><div class="stat-label">Pendientes / En revisión</div><div class="stat-number" id="ov-pending" style="color: var(--warn);" data-testid="admin-stat-pending">0</div></div>
+                    <div class="stat-card"><div class="stat-label">Aprobados</div><div class="stat-number" id="ov-approved" style="color: var(--success);" data-testid="admin-stat-approved">0</div></div>
+                    <div class="stat-card"><div class="stat-label">Rechazados</div><div class="stat-number" id="ov-rejected" style="color: var(--danger);" data-testid="admin-stat-rejected">0</div></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Cola de revisión</h2>
+                        <span style="color:var(--text-muted); font-size:.9rem;" id="queue-count">—</span>
+                    </div>
+                    <div id="queue-list" data-testid="admin-queue-list">Cargando…</div>
+                </div>
+            </section>
+
+            <!-- Artículos -->
+            <section id="tab-articles" class="tab-pane" style="display:none;">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Todos los artículos</h2>
+                        <div class="panel-filters" id="articles-filters">
+                            <button class="chip active" data-filter="all" data-testid="admin-filter-all">Todos</button>
+                            <button class="chip" data-filter="pending" data-testid="admin-filter-pending">Pendientes</button>
+                            <button class="chip" data-filter="in_review" data-testid="admin-filter-in_review">En revisión</button>
+                            <button class="chip" data-filter="approved" data-testid="admin-filter-approved">Aprobados</button>
+                            <button class="chip" data-filter="rejected" data-testid="admin-filter-rejected">Rechazados</button>
+                        </div>
+                    </div>
+                    <div id="all-articles-list" data-testid="admin-all-articles-list">Cargando…</div>
+                </div>
+            </section>
+
+            <!-- Usuarios -->
+            <section id="tab-users" class="tab-pane" style="display:none;">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Usuarios registrados</h2>
+                        <span id="users-count" style="color: var(--text-muted); font-size: .9rem;">—</span>
+                    </div>
+                    <div id="users-list" data-testid="admin-users-list">Cargando…</div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <script src="../utils/api.js"></script>
-    <script src="../utils/auth.js"></script>
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="review-modal">
+        <div class="modal">
+            <button type="button" class="modal-close" id="review-close-btn">×</button>
+            <h2 id="review-modal-title">Revisar artículo</h2>
+            <div class="modal-content" id="review-content">…</div>
+            <label style="margin-bottom: 1rem; display:block;">Nota de revisión (opcional)
+                <textarea id="review-note" rows="3" placeholder="Explica el motivo o qué corregir…" data-testid="admin-review-note"></textarea>
+            </label>
+            <div class="modal-actions">
+                <button class="btn-danger" id="btn-reject" data-testid="admin-review-reject-btn">Rechazar</button>
+                <button class="btn-secondary" id="btn-review" data-testid="admin-review-revise-btn">Volver a revisión</button>
+                <button class="btn-primary" id="btn-approve" data-testid="admin-review-approve-btn">Aprobar y publicar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/utils/api.js"></script>
+    <script src="/utils/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication and admin role
-            if (!auth.checkAuth()) return;
-            if (!auth.checkAdmin()) return;
+    (function(){
+        const statusLabel = { pending: 'Pendiente', in_review: 'En revisión', approved: 'Aprobado', rejected: 'Rechazado', draft: 'Borrador' };
+        function esc(s){ return String(s??'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+        function fmtDate(s){ try { return new Date(s).toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric' }); } catch { return ''; } }
 
-            // Tab switching
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tabName = this.dataset.tab;
+        let currentReviewId = null;
+        let currentFilter = 'all';
 
-                    // Update active tab button
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
+        async function init() {
+            if (!auth.requireAdmin()) return;
+            try {
+                const me = await api.me();
+                if (me.role !== 'admin') { window.location.href = '/dashboard'; return; }
+                auth.setUser(me);
+            } catch { auth.logout(); return; }
 
-                    // Show corresponding tab content
-                    const tabPanes = document.querySelectorAll('.tab-pane');
-                    tabPanes.forEach(pane => pane.style.display = 'none');
-                    document.getElementById(tabName + '-tab').style.display = 'block';
+            const u = auth.getUser() || {};
+            document.getElementById('user-name').textContent = u.name || 'Admin';
+            document.getElementById('user-avatar').textContent = (u.name||'A').slice(0,1).toUpperCase();
 
-                    // Load data for the tab
-                    loadTabData(tabName);
+            wireTabs();
+            wireFilters();
+            wireReviewModal();
+            await loadOverview();
+        }
+
+        function wireTabs() {
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    const tab = link.dataset.tab;
+                    document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+                    document.getElementById(`tab-${tab}`).style.display = 'block';
+                    if (tab === 'articles') loadAllArticles();
+                    else if (tab === 'users') loadUsers();
+                    else if (tab === 'overview') loadOverview();
                 });
             });
+        }
 
-            // Logout handler
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                auth.logout();
+        function wireFilters() {
+            document.querySelectorAll('#articles-filters .chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    document.querySelectorAll('#articles-filters .chip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    currentFilter = chip.dataset.filter;
+                    loadAllArticles();
+                });
             });
+        }
 
-            // Load initial data
-            loadTabData('users');
-        });
-
-        async function loadTabData(tabName) {
-            const contentId = tabName + '-content';
-            const content = document.getElementById(contentId);
-
+        async function loadOverview() {
             try {
-                let data;
-                switch (tabName) {
-                    case 'users':
-                        data = await api.getAllUsers();
-                        renderUsersTable(content, data);
-                        break;
-                    case 'articles':
-                        data = await api.getAllArticles();
-                        renderArticlesTable(content, data);
-                        break;
-                    case 'payments':
-                        data = await api.getAllPayments();
-                        renderPaymentsTable(content, data);
-                        break;
-                    case 'activity':
-                        data = await api.getActivityLogs();
-                        renderActivityTable(content, data);
-                        break;
+                const stats = await api.getAdminStats();
+                document.getElementById('ov-users').textContent = stats.totalUsers || 0;
+                const byStatus = stats.byStatus || {};
+                document.getElementById('ov-pending').textContent = (byStatus.pending || 0) + (byStatus.in_review || 0);
+                document.getElementById('ov-approved').textContent = byStatus.approved || 0;
+                document.getElementById('ov-rejected').textContent = byStatus.rejected || 0;
+
+                // Queue: pending + in_review
+                const queueArticles = await api.getAllArticles();
+                const queue = queueArticles.filter(a => a.status === 'pending' || a.status === 'in_review');
+                document.getElementById('queue-count').textContent = `${queue.length} artículo${queue.length !== 1 ? 's' : ''} esperando`;
+                renderQueue(queue);
+            } catch (err) {
+                document.getElementById('queue-list').innerHTML = `<p style="color: var(--danger);">Error: ${esc(err.message)}</p>`;
+            }
+        }
+
+        function renderQueue(arts) {
+            const container = document.getElementById('queue-list');
+            if (!arts.length) {
+                container.innerHTML = `<div class="empty"><div class="empty-icon">✓</div><p>¡No hay artículos pendientes! Cola vacía.</p></div>`;
+                return;
+            }
+            container.innerHTML = `
+                <table class="data-table">
+                    <thead><tr><th>Título</th><th>Autor</th><th>Categoría</th><th>Estado</th><th>Enviado</th><th>Acción</th></tr></thead>
+                    <tbody>
+                        ${arts.map(a => `
+                            <tr data-testid="admin-queue-row-${a.id}">
+                                <td><strong>${esc(a.title)}</strong><br><small style="color:var(--text-muted);">${esc(a.description||'').slice(0,100)}…</small></td>
+                                <td>${esc(a.authorName || a.author)}<br><small style="color:var(--text-subtle);">${esc(a.authorEmail || '')}</small></td>
+                                <td><span class="badge badge-draft">${esc(a.category||'—')}</span></td>
+                                <td><span class="badge badge-${a.status}">${statusLabel[a.status]}</span></td>
+                                <td style="color:var(--text-muted);">${fmtDate(a.createdAt)}</td>
+                                <td><button class="btn-primary btn-sm" onclick="window.openReview('${a.id}')" data-testid="admin-review-btn-${a.id}">Revisar</button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>`;
+        }
+
+        async function loadAllArticles() {
+            const container = document.getElementById('all-articles-list');
+            container.innerHTML = 'Cargando…';
+            try {
+                const status = currentFilter === 'all' ? undefined : currentFilter;
+                const arts = await api.getAllArticles(status);
+                if (!arts.length) {
+                    container.innerHTML = `<div class="empty"><p>No hay artículos con este filtro.</p></div>`;
+                    return;
                 }
-            } catch (error) {
-                console.error(`Error loading ${tabName}:`, error);
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead><tr><th>Título</th><th>Autor</th><th>Estado</th><th>Vistas</th><th>Fecha</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            ${arts.map(a => `
+                                <tr data-testid="admin-article-row-${a.id}">
+                                    <td><strong>${esc(a.title)}</strong></td>
+                                    <td>${esc(a.authorName || a.author)}</td>
+                                    <td><span class="badge badge-${a.status}">${statusLabel[a.status]}</span></td>
+                                    <td>${a.views || 0}</td>
+                                    <td style="color:var(--text-muted);">${fmtDate(a.createdAt)}</td>
+                                    <td class="actions-row">
+                                        <button class="btn-secondary btn-sm" onclick="window.openReview('${a.id}')" data-testid="admin-open-review-${a.id}">Revisar</button>
+                                        <button class="btn-danger btn-sm" onclick="window.deleteArt('${a.id}')" data-testid="admin-delete-${a.id}">Eliminar</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color: var(--danger);">Error: ${esc(err.message)}</p>`;
+            }
+        }
+
+        async function loadUsers() {
+            const container = document.getElementById('users-list');
+            container.innerHTML = 'Cargando…';
+            try {
+                const users = await api.getAllUsers();
+                document.getElementById('users-count').textContent = `${users.length} usuarios`;
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Registro</th><th>Acción</th></tr></thead>
+                        <tbody>
+                            ${users.map(u => `
+                                <tr data-testid="admin-user-row-${u.id}">
+                                    <td><strong>${esc(u.name)}</strong></td>
+                                    <td>${esc(u.email)}</td>
+                                    <td><span class="badge badge-${u.role==='admin'?'admin':'user'}">${esc(u.role)}</span></td>
+                                    <td style="color:var(--text-muted);">${fmtDate(u.createdAt)}</td>
+                                    <td>
+                                        <select onchange="window.changeRole('${u.id}', this.value)" style="padding:.3rem .6rem; font-size:.82rem;" data-testid="admin-role-select-${u.id}">
+                                            <option value="user" ${u.role==='user'?'selected':''}>user</option>
+                                            <option value="author" ${u.role==='author'?'selected':''}>author</option>
+                                            <option value="admin" ${u.role==='admin'?'selected':''}>admin</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color: var(--danger);">Error: ${esc(err.message)}</p>`;
+            }
+        }
+
+        function wireReviewModal() {
+            const modal = document.getElementById('review-modal');
+            document.getElementById('review-close-btn').addEventListener('click', () => modal.classList.remove('show'));
+            modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
+
+            document.getElementById('btn-approve').addEventListener('click', () => doReview('approve'));
+            document.getElementById('btn-reject').addEventListener('click', () => doReview('reject'));
+            document.getElementById('btn-review').addEventListener('click', () => doReview('review'));
+        }
+
+        async function doReview(action) {
+            if (!currentReviewId) return;
+            const note = document.getElementById('review-note').value.trim();
+            try {
+                await api.reviewArticle(currentReviewId, action, note);
+                document.getElementById('review-modal').classList.remove('show');
+                await loadOverview();
+                await loadAllArticles();
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        window.openReview = async function (id) {
+            currentReviewId = id;
+            const modal = document.getElementById('review-modal');
+            const content = document.getElementById('review-content');
+            content.innerHTML = '<p>Cargando…</p>';
+            modal.classList.add('show');
+            document.getElementById('review-note').value = '';
+            try {
+                const a = await api.getArticle(id);
                 content.innerHTML = `
-                    <div class="error-message">
-                        Error al cargar ${tabName}. Inténtalo de nuevo más tarde.
+                    <div style="background: var(--surface); padding:1rem; border-radius:var(--radius); margin-bottom:1rem;">
+                        <h3 style="margin:0 0 .5rem;">${esc(a.title)}</h3>
+                        <p style="color: var(--text-muted); margin:0 0 .5rem;"><strong>Autor:</strong> ${esc(a.authorName || a.author || 'N/A')} · <strong>Categoría:</strong> ${esc(a.category||'—')}</p>
+                        <p style="color: var(--text-muted); margin:0 0 1rem;"><strong>Estado actual:</strong> <span class="badge badge-${a.status}">${statusLabel[a.status]}</span></p>
+                        <p style="font-style:italic; color: var(--text);">${esc(a.description||'')}</p>
                     </div>
+                    <div style="max-height:240px; overflow-y:auto; padding:1rem; background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border); white-space: pre-wrap; color: var(--text);">${esc(a.content || '')}</div>
                 `;
+                document.getElementById('review-note').value = a.reviewNote || '';
+            } catch (e) {
+                content.innerHTML = '<p style="color:var(--danger);">No se pudo cargar: ' + esc(e.message) + '</p>';
             }
-        }
+        };
 
-        function renderUsersTable(container, users) {
-            if (!users || users.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No hay usuarios registrados</p>';
-                return;
-            }
+        window.deleteArt = async function (id) {
+            if (!confirm('¿Eliminar este artículo definitivamente?')) return;
+            try {
+                await api.deleteArticle(id);
+                await loadAllArticles();
+                await loadOverview();
+            } catch (e) { alert('Error: ' + e.message); }
+        };
 
-            // Stats
-            const totalUsers = users.length;
-            const adminUsers = users.filter(u => u.role === 'admin').length;
-            const premiumUsers = users.filter(u => u.subscription_status === 'premium').length;
+        window.changeRole = async function (id, role) {
+            try {
+                await api.updateUserRole(id, role);
+            } catch (e) { alert('Error: ' + e.message); loadUsers(); }
+        };
 
-            let html = `
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">${totalUsers}</div>
-                        <div class="stat-label">Total Usuarios</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${adminUsers}</div>
-                        <div class="stat-label">Administradores</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${premiumUsers}</div>
-                        <div class="stat-label">Usuarios Premium</div>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Rol</th>
-                            <th>Suscripción</th>
-                            <th>Fecha Registro</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            users.forEach(user => {
-                const registerDate = new Date(user.created_at).toLocaleDateString('es-ES');
-                const roleClass = user.role === 'admin' ? 'role-admin' : 'role-user';
-                const subscriptionClass = user.subscription_status === 'premium' ? 'status-active' : 'status-inactive';
-                    const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
-
-                    html += `
-                        <tr>
-                            <td>${user.id}</td>
-                            <td>${displayName}</td>
-                    </tr>
-                `;
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function renderArticlesTable(container, articles) {
-            if (!articles || articles.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No hay artículos publicados</p>';
-                return;
-            }
-
-            let html = `
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">${articles.length}</div>
-                        <div class="stat-label">Total Artículos</div>
-                    </div>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Título</th>
-                            <th>Autor</th>
-                            <th>Categoría</th>
-                            <th>Vistas</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            articles.forEach(article => {
-                const publishDate = new Date(article.created_at).toLocaleDateString('es-ES');
-
-                html += `
-                    <tr>
-                        <td>${article.id}</td>
-                        <td>${article.title}</td>
-                        <td>${article.author_name || 'N/A'}</td>
-                        <td>${article.category_name || 'N/A'}</td>
-                        <td>${article.views || 0}</td>
-                        <td>${publishDate}</td>
-                    </tr>
-                `;
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function renderPaymentsTable(container, payments) {
-            if (!payments || payments.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No hay pagos registrados</p>';
-                return;
-            }
-
-            let html = `
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Monto</th>
-                            <th>Estado</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            payments.forEach(payment => {
-                const paymentDate = new Date(payment.created_at).toLocaleDateString('es-ES');
-                const statusClass = payment.status === 'completed' ? 'status-active' :
-                                  payment.status === 'pending' ? 'status-pending' : 'status-inactive';
-
-                html += `
-                    <tr>
-                        <td>${payment.id}</td>
-                        <td>${payment.user_email || 'N/A'}</td>
-                        <td>$${payment.amount}</td>
-                        <td><span class="status-badge ${statusClass}">${payment.status}</span></td>
-                        <td>${paymentDate}</td>
-                    </tr>
-                `;
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
-
-        function renderActivityTable(container, activities) {
-            if (!activities || activities.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No hay actividad registrada</p>';
-                return;
-            }
-
-            let html = `
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Acción</th>
-                            <th>Detalles</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            activities.forEach(activity => {
-                const activityDate = new Date(activity.created_at).toLocaleDateString('es-ES');
-
-                html += `
-                    <tr>
-                        <td>${activity.id}</td>
-                        <td>${activity.user_email || 'N/A'}</td>
-                        <td>${activity.action}</td>
-                        <td>${activity.details || '-'}</td>
-                        <td>${activityDate}</td>
-                    </tr>
-                `;
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        }
+        document.addEventListener('DOMContentLoaded', init);
+    })();
     </script>
 </body>
 </html>

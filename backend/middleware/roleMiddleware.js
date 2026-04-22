@@ -1,3 +1,5 @@
+// Middleware de autorización por rol.
+// Exporta tanto `permit` como `authorize` (alias) para compatibilidad.
 export const permit = (...allowedRoles) => {
     return (req, res, next) => {
         if (!req.user || !allowedRoles.includes(req.user.role)) {
@@ -9,3 +11,7 @@ export const permit = (...allowedRoles) => {
         next();
     };
 };
+
+export const authorize = permit;
+
+export default permit;

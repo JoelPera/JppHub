@@ -37,6 +37,14 @@ export class AuthController {
             data: req.user
         });
     }
+
+    static async googleLogin(req, res, next) {
+        try {
+            const { session_id } = req.body;
+            const data = await AuthService.googleLogin(session_id, req);
+            res.json({ status: 'success', message: 'Login con Google correcto', data });
+        } catch (err) { next(err); }
+    }
 }
 
 export default AuthController;
