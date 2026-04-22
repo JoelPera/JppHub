@@ -22,7 +22,7 @@
 - Password: `jpphub_dev_2026`
 
 ## URLs
-- Frontend público: https://e7daa7e1-68ee-423b-ba3f-536897254c06.preview.emergentagent.com
+- Frontend público: https://web-modernize-7.preview.emergentagent.com
 - Backend API: mismo dominio bajo `/api/*` (redirect ingress a puerto 8001)
 
 ## Google OAuth (Emergent)
