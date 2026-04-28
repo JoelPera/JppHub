@@ -41,16 +41,16 @@ app.use(rateLimit({
 }));
 
 // ========== RUTAS ==========
-app.use('/api/auth', authRoutes);
-app.use('/api/health', healthRoutes);
-app.use('/api/articles', articleRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/uploads', uploadRoutes);
+app.use('/auth', authRoutes);
+app.use('/health', healthRoutes);
+app.use('/articles', articleRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/users', userRoutes);
+app.use('/admin', adminRoutes);
+app.use('/contact', contactRoutes);
+app.use('/uploads', uploadRoutes);
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.json({
         message: 'JppHub SaaS API',
         version: '2.0.0',
