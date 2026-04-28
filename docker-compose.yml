@@ -19,7 +19,8 @@ services:
     networks:
       - jpphub_network
     depends_on:
-      - mysql   # 🔥 IMPORTANTE
+      mysql:
+        condition: service_healthy   # ✔ mejor que solo "depends_on"
 
   nginx:
     build:
@@ -39,7 +40,7 @@ services:
     networks:
       - jpphub_network
 
-  mysql:   # 🔥 AHORA SÍ ESTÁ BIEN
+  mysql:
     image: mysql:8
     volumes:
       - mysql_data:/var/lib/mysql
@@ -48,7 +49,7 @@ services:
       MYSQL_ROOT_PASSWORD: Calvotron27.
       MYSQL_DATABASE: jpphub
     networks:
-      - jpphub_network 
+      - jpphub_network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
