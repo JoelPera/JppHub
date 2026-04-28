@@ -1,0 +1,176 @@
+{
+  "project_name": "JppHub",
+  "theme": "light",
+  "archetype": "4_swiss_high_contrast",
+  "typography": {
+    "headings": {
+      "family": "Cabinet Grotesk",
+      "import_url": "https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400&display=swap",
+      "weights": ["400", "500", "700", "800"],
+      "classes": "font-cabinet tracking-tight text-slate-900 dark:text-white"
+    },
+    "body": {
+      "family": "Satoshi",
+      "import_url": "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap",
+      "weights": ["400", "500", "700"],
+      "classes": "font-satoshi text-slate-600 dark:text-slate-400"
+    },
+    "editorial_article": {
+      "family": "Instrument Serif",
+      "import_url": "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap",
+      "weights": ["400"],
+      "classes": "font-serif text-slate-800 dark:text-slate-200 leading-relaxed text-lg sm:text-xl"
+    },
+    "scale": {
+      "h1": "text-5xl sm:text-6xl+ font-bold tracking-tighter",
+      "h2": "text-3xl sm:text-4xl font-bold tracking-tight",
+      "h3": "text-2xl sm:text-3xl font-semibold tracking-tight",
+      "h4": "text-xl font-medium tracking-tight",
+      "body": "text-base sm:text-lg",
+      "small": "text-sm tracking-wide"
+    }
+  },
+  "colors": {
+    "light": {
+      "background": "#FDFDFC",
+      "surface": "#FFFFFF",
+      "surface_muted": "#F3F4F6",
+      "text_primary": "#0F172A",
+      "text_secondary": "#64748B",
+      "border": "#E2E8F0",
+      "primary": "#0A0A0A",
+      "primary_hover": "#27272A",
+      "primary_text": "#FFFFFF",
+      "accent": "#2563EB",
+      "status": {
+        "approved": "#10B981",
+        "in_review": "#F59E0B",
+        "rejected": "#EF4444",
+        "pending": "#64748B"
+      }
+    },
+    "dark": {
+      "background": "#09090B",
+      "surface": "#18181B",
+      "surface_muted": "#27272A",
+      "text_primary": "#FAFAFA",
+      "text_secondary": "#A1A1AA",
+      "border": "#27272A",
+      "primary": "#FFFFFF",
+      "primary_hover": "#F4F4F5",
+      "primary_text": "#09090B",
+      "accent": "#3B82F6",
+      "status": {
+        "approved": "#10B981",
+        "in_review": "#F59E0B",
+        "rejected": "#EF4444",
+        "pending": "#A1A1AA"
+      }
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-20 sm:py-32",
+    "card_padding": "p-6 sm:p-8",
+    "grid": {
+      "bento": "grid grid-cols-1 md:grid-cols-12 gap-6",
+      "features": "grid grid-cols-1 md:grid-cols-3 gap-8"
+    },
+    "radius": {
+      "button": "rounded-full",
+      "card": "rounded-2xl",
+      "input": "rounded-lg"
+    }
+  },
+  "motion": {
+    "hover": "transition-all duration-300 ease-out",
+    "page_enter": {
+      "initial": { "opacity": 0, "y": 20 },
+      "animate": { "opacity": 1, "y": 0 },
+      "transition": { "duration": 0.5, "ease": "easeOut" }
+    },
+    "stagger": {
+      "visible": { "opacity": 1, "y": 0, "transition": { "staggerChildren": 0.1 } },
+      "hidden": { "opacity": 0, "y": 20 }
+    }
+  },
+  "component_specs": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-full font-medium transition-all duration-300 active:scale-95",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 rounded-full font-medium transition-all duration-300",
+      "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-full font-medium"
+    },
+    "cards": {
+      "default": "bg-surface border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300",
+      "bento_item": "bg-surface border border-border rounded-2xl overflow-hidden hover:-translate-y-1 transition-transform duration-300"
+    },
+    "navigation": {
+      "header": "fixed top-0 w-full z-50 backdrop-blur-xl bg-background/70 border-b border-border/40",
+      "footer": "bg-surface-muted py-20 border-t border-border mt-32"
+    },
+    "status_badges": {
+      "approved": "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider",
+      "in_review": "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider",
+      "rejected": "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider",
+      "pending": "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+    },
+    "admin_tables": {
+      "wrapper": "rounded-2xl border border-border overflow-hidden bg-surface",
+      "header": "bg-surface-muted px-6 py-4 border-b border-border text-sm font-medium text-text-secondary uppercase tracking-wider",
+      "row": "border-b border-border hover:bg-surface-muted/50 transition-colors",
+      "cell": "px-6 py-4 whitespace-nowrap text-sm text-text-primary"
+    }
+  },
+  "media": {
+    "hero_backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1667514354564-8c375134a922?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBzYWFzJTIwYWJzdHJhY3QlMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3Njg5OTgzOXww&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract graphical user interface, clean light mode",
+        "category": "hero_background"
+      },
+      {
+        "url": "https://images.pexels.com/photos/28494629/pexels-photo-28494629.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Dynamic abstract art with floating shapes",
+        "category": "hero_decorative"
+      }
+    ],
+    "company_logos": [
+      {
+        "url": "https://images.unsplash.com/photo-1765448808249-a3610f38e612?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwyfHxjb21wYW55JTIwbG9nbyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MHx8fHwxNzc2ODk5ODM5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Company Logo 1",
+        "category": "partner_logo"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1670139303429-9ecdfe5cf0fc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwzfHxjb21wYW55JTIwbG9nbyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MHx8fHwxNzc2ODk5ODM5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Company Logo 2",
+        "category": "partner_logo"
+      }
+    ],
+    "portraits": [
+      {
+        "url": "https://images.pexels.com/photos/17582358/pexels-photo-17582358.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Professional smiling man",
+        "category": "testimonial_author"
+      },
+      {
+        "url": "https://images.pexels.com/photos/36645466/pexels-photo-36645466.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Professional confident businessman",
+        "category": "testimonial_author"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Install 'framer-motion' for staggered page entrances and hover reveals.",
+    "Install '@phosphor-icons/react' for all iconography to match the sleek SaaS look.",
+    "Use 'clsx' and 'tailwind-merge' for component classes.",
+    "Ensure 'next-themes' or equivalent is used for the dark/light mode toggle.",
+    "All forms (Login, Register, Contact) must use Shadcn customized inputs with generous padding (e.g., p-4, h-12).",
+    "CRITICAL: Add 'data-testid' to every button, link, form input, and interactive tab.",
+    "Implement the landing page with a hero section displaying the abstract SaaS background, a 'bento' grid for features, a marquee of partner_logos, and testimonials using the portrait images.",
+    "Use 'Cabinet Grotesk' for all headings and 'Satoshi' for UI body text. Use 'Instrument Serif' specifically for the content of the published articles to give an editorial, reading-focused feel.",
+    "Avoid any generic purple/violet gradients. Use pure B&W with high-contrast UI and accent colors strictly for interactive states or badges.",
+    "The Dashboard and Admin panel should be 'cardless' or use very subtle borders (1px border-border) instead of heavy shadows to maintain a clean Notion-like appearance.",
+    "Article editor modal should integrate React Quill (or similar) cleanly with minimal UI chrome.",
+    "Add tailwind configuration for font families 'cabinet', 'satoshi', and 'serif'."
+  ]
+}

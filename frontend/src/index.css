@@ -1,0 +1,120 @@
+@import 'react-quill/dist/quill.snow.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+
+html, body, #root { height: 100%; }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* Selection */
+::selection { background: #0A0A0A; color: #fff; }
+.dark ::selection { background: #FAFAFA; color: #09090B; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 10px; }
+.dark ::-webkit-scrollbar-thumb { background: #262626; }
+::-webkit-scrollbar-thumb:hover { background: #a3a3a3; }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap;
+  }
+  .btn-primary {
+    @apply btn bg-ink-900 text-white hover:bg-ink-800 dark:bg-white dark:text-ink-900 dark:hover:bg-ink-100;
+  }
+  .btn-secondary {
+    @apply btn bg-ink-100 text-ink-900 hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-50 dark:hover:bg-ink-700;
+  }
+  .btn-outline {
+    @apply btn border border-ink-200 dark:border-ink-700 hover:bg-ink-50 dark:hover:bg-ink-900 text-ink-900 dark:text-ink-50;
+  }
+  .btn-ghost {
+    @apply btn hover:bg-ink-100 dark:hover:bg-ink-800 text-ink-700 dark:text-ink-300;
+  }
+  .btn-lg {
+    @apply px-7 py-3.5 text-base;
+  }
+  .input {
+    @apply w-full px-4 h-12 bg-white dark:bg-ink-900 border border-ink-200 dark:border-ink-700 rounded-xl text-ink-900 dark:text-ink-50 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-ink-900/20 dark:focus:ring-white/20 focus:border-ink-900 dark:focus:border-white transition-all;
+  }
+  .card {
+    @apply bg-white dark:bg-ink-900 border border-ink-200/70 dark:border-ink-800 rounded-2xl transition-all;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  .heading {
+    @apply font-cabinet font-bold tracking-tight text-ink-900 dark:text-white;
+  }
+  .container-tight {
+    @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .dark .grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.07) 1px, transparent 0);
+  }
+}
+
+/* Prose (article content) */
+.prose-editorial {
+  @apply font-serif text-[1.25rem] sm:text-[1.35rem] leading-[1.75] text-ink-800 dark:text-ink-200;
+}
+.prose-editorial h2 {
+  @apply font-cabinet font-bold text-3xl sm:text-4xl tracking-tight text-ink-900 dark:text-white mt-14 mb-5;
+}
+.prose-editorial h3 {
+  @apply font-cabinet font-bold text-2xl tracking-tight text-ink-900 dark:text-white mt-10 mb-4;
+}
+.prose-editorial p { @apply mb-6; }
+.prose-editorial a { @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent transition-colors; }
+.prose-editorial ul, .prose-editorial ol { @apply pl-6 mb-6 space-y-2; }
+.prose-editorial ul { @apply list-disc; }
+.prose-editorial ol { @apply list-decimal; }
+.prose-editorial blockquote {
+  @apply border-l-4 border-ink-900 dark:border-white pl-6 italic my-8 text-ink-700 dark:text-ink-300;
+}
+.prose-editorial code {
+  @apply font-mono text-[0.9em] bg-ink-100 dark:bg-ink-800 px-1.5 py-0.5 rounded;
+}
+.prose-editorial pre {
+  @apply font-mono text-sm bg-ink-900 dark:bg-ink-800 text-ink-50 p-5 rounded-xl overflow-x-auto my-6;
+}
+.prose-editorial strong { @apply font-semibold text-ink-900 dark:text-white; }
+.prose-editorial img { @apply rounded-xl my-8; }
+
+/* Quill dark theme override */
+.dark .ql-toolbar {
+  @apply bg-ink-900 border-ink-700 !important;
+}
+.dark .ql-container {
+  @apply bg-ink-900 border-ink-700 text-ink-50 !important;
+}
+.dark .ql-editor.ql-blank::before { color: rgb(115 115 115) !important; }
+.dark .ql-stroke { stroke: rgb(212 212 212) !important; }
+.dark .ql-fill { fill: rgb(212 212 212) !important; }
+.dark .ql-picker-label { color: rgb(212 212 212) !important; }
+.ql-toolbar.ql-snow, .ql-container.ql-snow {
+  border-color: theme('colors.ink.200') !important;
+}
+.ql-toolbar.ql-snow { border-radius: 12px 12px 0 0; }
+.ql-container.ql-snow { border-radius: 0 0 12px 12px; min-height: 280px; }

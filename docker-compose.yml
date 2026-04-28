@@ -1,0 +1,63 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    restart: always
+    networks:
+      - jpphub_network
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
+    restart: always
+    networks:
+      - jpphub_network
+    depends_on:
+      - mysql   # 🔥 IMPORTANTE
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+    networks:
+      - jpphub_network
+
+  mysql:   # 🔥 AHORA SÍ ESTÁ BIEN
+    image: mysql:8
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Calvotron27.
+      MYSQL_DATABASE: jpphub
+    networks:
+      - jpphub_network 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  jpphub_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
